@@ -95,15 +95,6 @@
     <Compile Include="View\Admin\ABasicInformationView.xaml.cs">
       <DependentUpon>ABasicInformationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\AdminBasicInformationView.xaml.cs">
-      <DependentUpon>AdminBasicInformationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\AdminPivotPage.xaml.cs">
-      <DependentUpon>AdminPivotPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\AdminQuestionListView.xaml.cs">
-      <DependentUpon>AdminQuestionListView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Admin\APivotPage.xaml.cs">
       <DependentUpon>APivotPage.xaml</DependentUpon>
     </Compile>
@@ -161,18 +152,6 @@
     <Page Include="View\Admin\ABasicInformationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Admin\AdminBasicInformationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\AdminPivotPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\AdminQuestionListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\APivotPage.xaml">
       <Generator>MSBuild:Compile</Generator>

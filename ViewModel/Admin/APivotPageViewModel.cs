@@ -46,76 +46,62 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		#endregion
 
 		#region PROPERTIES
+
+
 		/// <summary>
 		/// The Multiple Select property
 		/// </summary>
-		private bool multipleSelect;
+		private bool _multipleSelect;
 		public bool MultipleSelect {
-			get { return multipleSelect; }
-			set {
-				multipleSelect = value;
-				RaisePropertyChanged(() => this.MultipleSelect);
-			}
+			get { return _multipleSelect; }
+			set { Set(() => this.MultipleSelect, ref _multipleSelect, value); }
 		}
 
 		/// <summary>
 		/// The New Button visibility property
 		/// </summary>
-		private bool newButtonVisibility;
+		private bool _newButtonVisibility;
 		public bool NewButtonVisibility {
-			get { return newButtonVisibility; }
-			set {
-				newButtonVisibility = value;
-				RaisePropertyChanged(() => this.NewButtonVisibility);
-			}
+			get { return _newButtonVisibility; }
+			set { Set(() => this.NewButtonVisibility, ref _newButtonVisibility, value); }
 		}
 
 		/// <summary>
 		/// The Save Button visibility property
 		/// </summary>
-		private bool saveButtonVisibility;
+		private bool _saveButtonVisibility;
 		public bool SaveButtonVisibility {
-			get { return saveButtonVisibility; }
-			set {
-				saveButtonVisibility = value;
-				RaisePropertyChanged(() => this.SaveButtonVisibility);
-			}
+			get { return _saveButtonVisibility; }
+			set { Set(() => this.SaveButtonVisibility, ref _saveButtonVisibility, value); }
 		}
 
 		/// <summary>
 		/// The Select Button visibility property
 		/// </summary>
-		private bool selectButtonVisibility;
+		private bool _selectButtonVisibility;
 		public bool SelectButtonVisibility {
-			get { return selectButtonVisibility; }
-			set {
-				selectButtonVisibility = value;
-				RaisePropertyChanged(() => this.SelectButtonVisibility);
-			}
+			get { return _selectButtonVisibility; }
+			set { Set(() => this.SelectButtonVisibility, ref _selectButtonVisibility, value); }
 		}
 
 		/// <summary>
 		/// The Delete Button visibility property
 		/// </summary>
-		private bool deleteButtonVisibility;
+		private bool _deleteButtonVisibility;
 		public bool DeleteButtonVisibility {
-			get { return deleteButtonVisibility; }
-			set {
-				deleteButtonVisibility = value;
-				RaisePropertyChanged(() => this.DeleteButtonVisibility);
-			}
+			get { return _deleteButtonVisibility; }
+			set { Set(() => this.DeleteButtonVisibility, ref _deleteButtonVisibility, value); }
 		}
 
 		/// <summary>
 		/// The Selected Index property
 		/// </summary>
-		private int selectedIndex;
+		private int _selectedIndex;
 		public int SelectedIndex {
-			get { return selectedIndex; }
+			get { return _selectedIndex; }
 			set {
-				selectedIndex = value;
-				RaisePropertyChanged(() => this.SelectedIndex);
-				SelectionChangeHandler(selectedIndex);
+				Set(() => this.SelectedIndex, ref _selectedIndex, value);
+				SelectionChangeHandler(_selectedIndex);
 			}
 		}
 		#endregion

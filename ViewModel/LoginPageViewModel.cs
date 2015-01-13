@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using TrustworthyCompanion.View.Admin;
 
 namespace TrustworthyCompanion.ViewModel {
 	/// <summary>
@@ -31,6 +29,10 @@ namespace TrustworthyCompanion.ViewModel {
 
 			this.LoginCommand = new RelayCommand(() => LoginClickHandler(true));
 			this.DetailsCommand = new RelayCommand<Tuple<string, string>>((args) => NavigateTo(args));
+
+			// TODO - temporary data (to delete)
+			this.Username = "admin";
+			this.Password = "admin";
 		}
 
 		#region RELAY COMMANDS
@@ -38,41 +40,23 @@ namespace TrustworthyCompanion.ViewModel {
 		public RelayCommand LoginCommand { get; private set; }
 		#endregion
 
-		/// <summary>
-		/// The notification title
-		/// </summary>
-		private string title;
-		public string Title {
-			get { return title; }
-			set {
-				title = value;
-				RaisePropertyChanged(() => this.Title);
-			}
-		}
-
 		#region PROPERTIES
 		/// <summary>
 		/// The Username property
 		/// </summary>
-		private string username;
+		private string _username;
 		public string Username {
-			get { return username; }
-			set {
-				username = value;
-				RaisePropertyChanged(() => this.Username);
-			}
+			get { return _username; }
+			set { Set(() => this.Username, ref _username, value); }
 		}
 
 		/// <summary>
 		/// The Password property
 		/// </summary>
-		private string password;
+		private string _password;
 		public string Password {
-			get { return password; }
-			set {
-				password = value;
-				RaisePropertyChanged(() => this.Password);
-			}
+			get { return _password; }
+			set { Set(() => this.Password, ref _password, value); }
 		}
 		#endregion
 

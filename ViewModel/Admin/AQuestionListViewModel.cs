@@ -21,13 +21,10 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		/// <summary>
 		/// The ListView selection mode property
 		/// </summary>
-		private bool multipleSelect;
+		private bool _multipleSelect;
 		public bool MultipleSelect {
-			get { return multipleSelect; }
-			set {
-				multipleSelect = value;
-				RaisePropertyChanged(() => this.MultipleSelect);
-			}
+			get { return _multipleSelect; }
+			set { Set(() => this.MultipleSelect, ref _multipleSelect, value); }
 		}
 		#endregion
 

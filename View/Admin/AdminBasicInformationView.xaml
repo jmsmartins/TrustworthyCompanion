@@ -1,0 +1,22 @@
+﻿<UserControl
+    x:Class="TrustworthyCompanion.View.Admin.AdminBasicInformationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.View.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Grid>
+		<StackPanel Orientation="Vertical" Margin="0,0,15,0">
+			<TextBlock Text="Name" FontSize="18" />
+			<TextBox Text="" />
+			<TextBlock Text="Phone Number" FontSize="18" />
+			<TextBox Text="" />
+			<TextBlock Text="Email" FontSize="18" />
+			<TextBox Text="" />
+			<TextBlock Text="Address" FontSize="18" />
+			<TextBox Height="150" Text="" />
+		</StackPanel>
+    </Grid>
+</UserControl>

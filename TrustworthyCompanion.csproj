@@ -83,13 +83,57 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\DatabaseService.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Messages\SelectionModeChange.cs" />
+    <Compile Include="Tools\ItemClickCommand.cs" />
+    <Compile Include="Tools\ValueConverters.cs" />
+    <Compile Include="ViewModel\Admin\ABasicInformationViewModel.cs" />
+    <Compile Include="ViewModel\Admin\APivotPageViewModel.cs" />
+    <Compile Include="ViewModel\Admin\AQuestionListViewModel.cs" />
+    <Compile Include="ViewModel\Admin\Question\AQuestionMediaViewModel.cs" />
+    <Compile Include="ViewModel\Admin\Question\AQuestionViewModel.cs" />
+    <Compile Include="ViewModel\LoginPageViewModel.cs" />
+    <Compile Include="View\Admin\ABasicInformationView.xaml.cs">
+      <DependentUpon>ABasicInformationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\AdminBasicInformationView.xaml.cs">
+      <DependentUpon>AdminBasicInformationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\AdminPivotPage.xaml.cs">
+      <DependentUpon>AdminPivotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\AdminQuestionListView.xaml.cs">
+      <DependentUpon>AdminQuestionListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\APivotPage.xaml.cs">
+      <DependentUpon>APivotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\AQuestionListView.xaml.cs">
+      <DependentUpon>AQuestionListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AdminQuestionMediaView.xaml.cs">
+      <DependentUpon>AdminQuestionMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AdminQuestionPage.xaml.cs">
+      <DependentUpon>AdminQuestionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AdminQuestionView.xaml.cs">
+      <DependentUpon>AdminQuestionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AQuestionMediaView.xaml.cs">
+      <DependentUpon>AQuestionMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AQuestionPage.xaml.cs">
+      <DependentUpon>AQuestionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\Question\AQuestionView.xaml.cs">
+      <DependentUpon>AQuestionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SQLite.cs" />
     <Compile Include="Database\SQLiteAsync.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +154,59 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\MainPage.xaml">
+    <Page Include="Resources\ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\ABasicInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\AdminBasicInformationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\AdminPivotPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\AdminQuestionListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\APivotPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\AQuestionListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\Question\AdminQuestionMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\Question\AdminQuestionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\Question\AdminQuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\Question\AQuestionMediaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\Question\AQuestionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\Question\AQuestionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -131,10 +227,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <PRIResource Include="Strings\pt-PT\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="Tools\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

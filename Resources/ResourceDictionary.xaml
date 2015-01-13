@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.Resources"
+	xmlns:tools="using:TrustworthyCompanion.Tools"
+	xmlns:vm="using:TrustworthyCompanion.ViewModel">
+	
+	<vm:ViewModelLocator x:Key="ViewModelLocator" />
+	
+	<tools:VisibilityValueConverter x:Key="VisibilityValueConverter" />
+	<tools:SelectionModeValueConverter x:Key="SelectionModeValueConverter" />
+    
+</ResourceDictionary>

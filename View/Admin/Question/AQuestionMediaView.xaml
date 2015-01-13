@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="TrustworthyCompanion.View.Admin.Question.AQuestionMediaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.View.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	DataContext="{Binding AQuestionMediaViewModel, Source={StaticResource ViewModelLocator}}"
+    mc:Ignorable="d">
+    
+	<UserControl.Resources>
+		<DataTemplate x:Key="listTemplate">
+			<Grid HorizontalAlignment="Stretch" Margin="15,0,15,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="250" />
+					<ColumnDefinition Width="120" />
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding filename}" />
+				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding filetype}" />
+			</Grid>
+		</DataTemplate>
+	</UserControl.Resources>
+	
+    <Grid>
+		<!-- MEDIA -->
+		<TextBlock Text="Media" FontSize="18" />
+		<ListView x:Name="mediaList"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{StaticResource listTemplate}" />
+
+    </Grid>
+</UserControl>

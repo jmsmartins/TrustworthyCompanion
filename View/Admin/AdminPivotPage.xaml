@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="TrustworthyCompanion.View.Admin.AdminPivotPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:admin="using:TrustworthyCompanion.View.Admin"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <CommonNavigationTransitionInfo IsStaggeringEnabled="True"/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+	
+	
+    <Grid>
+		<Pivot x:Uid="Pivot" Title="TRUSTWORTHY COMPANION" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <!--Pivot item one-->
+            <PivotItem
+                x:Uid="information"
+                Margin="19,14.5,0,0"
+                Header="information"
+                DataContext="{Binding FirstGroup}"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <!-- Admin Basic Information Page -->
+				<admin:AdminBasicInformationView />
+            </PivotItem>
+
+            <!--Pivot item two-->
+			<PivotItem
+                x:Uid="questionList"
+                Margin="19,14.5,0,0"
+                Header="question list"
+                DataContext="{Binding SecondGroup}">
+				<!-- Admin Questions List Page -->
+				<admin:AdminQuestionListView />
+				
+            </PivotItem>
+        </Pivot>
+    </Grid>
+	
+	<Page.BottomAppBar>
+		<CommandBar IsOpen="False">
+			<CommandBar.PrimaryCommands>
+				<AppBarButton x:Uid="NewButton" Icon="Add" Label="New" />
+				<AppBarButton x:Uid="SaveButton" Icon="Save" Label="Save" />
+				<AppBarButton x:Uid="MultiselectButton" Icon="Bullets" Label="Select" />
+				<AppBarButton x:Uid="DeleteButton" Icon="Delete" Label="Delete" />
+			</CommandBar.PrimaryCommands>
+		</CommandBar>
+	</Page.BottomAppBar>
+</Page>

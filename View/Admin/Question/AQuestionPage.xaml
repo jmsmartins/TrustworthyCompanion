@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="TrustworthyCompanion.View.Admin.Question.AQuestionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.View.Admin"
+	xmlns:question="using:TrustworthyCompanion.View.Admin.Question"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	DataContext="{Binding AQuestionPageViewModel, Source={StaticResource ViewModelLocator}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Grid>
+		<Pivot x:Uid="Pivot" Title="QUESTION NAME" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <!--Pivot item one-->
+            <PivotItem
+                x:Uid="Question"
+                Margin="19,14.5,0,0"
+                DataContext="{Binding FirstGroup}"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <!-- Admin Basic Information Page -->
+				<question:AQuestionView Margin="0,0,15,0" />
+            </PivotItem>
+
+            <!--Pivot item two-->
+			<PivotItem
+                x:Uid="Media"
+                Margin="19,14.5,0,0"
+                DataContext="{Binding SecondGroup}">
+				<!-- Admin Questions List Page -->
+				<question:AQuestionMediaView Margin="0,0,15,0" />
+				
+            </PivotItem>
+        </Pivot>
+	</Grid>
+	
+	<Page.BottomAppBar>
+		<CommandBar IsOpen="False">
+			<CommandBar.PrimaryCommands>
+				<AppBarButton x:Uid="SaveButton" Icon="Save" />
+				<AppBarButton x:Uid="DeleteButton" Icon="Delete" />
+				<AppBarButton x:Uid="CancelButton" Icon="Cancel" />
+			</CommandBar.PrimaryCommands>
+			<CommandBar.SecondaryCommands>
+				<AppBarButton x:Uid="ImageButton" Icon="Pictures" />
+				<AppBarButton x:Uid="VideoButton" Icon="Video" />
+				<AppBarButton x:Uid="AudioButton" Icon="Audio" />
+			</CommandBar.SecondaryCommands>
+		</CommandBar>
+	</Page.BottomAppBar>
+</Page>

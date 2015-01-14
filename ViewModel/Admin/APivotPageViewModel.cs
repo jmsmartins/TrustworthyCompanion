@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using TrustworthyCompanion.Messages;
+using TrustworthyCompanion.Tools;
 using Windows.UI.Xaml.Controls;
 
 namespace TrustworthyCompanion.ViewModel.Admin {
@@ -32,6 +33,7 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 			this.SaveCommand = new RelayCommand(SaveHandler);
 			this.SelectCommand = new RelayCommand(SelectHandler);
 			this.DeleteCommand = new RelayCommand(DeleteHandler);
+			this.LogoutCommand = new RelayCommand(LogoutHandler);
 			//this.SelectionChangedCommand = new RelayCommand<object>((sender) => SelectionChangeHandler(sender));
 		}
 
@@ -40,6 +42,7 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		public RelayCommand SaveCommand { get; private set; }
 		public RelayCommand SelectCommand { get; private set; }
 		public RelayCommand DeleteCommand { get; private set; }
+		public RelayCommand LogoutCommand { get; private set; }
 
 		//public RelayCommand<object> SelectionChangedCommand { get; private set; }
 
@@ -109,7 +112,7 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		private void SelectionChangeHandler(int index) {
 			switch(index) {
 				case 0:
-					NewButtonVisibility = true;
+					NewButtonVisibility = false;
 					SaveButtonVisibility = true;
 					SelectButtonVisibility = false;
 					DeleteButtonVisibility = false;
@@ -127,15 +130,18 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		private void NewQuestionHandler() {
 			try {
 				// Tuple<UIElement, string> tupleValues = (Tuple<UIElement, string>)e.Parameter;
-				NavigateTo(new Tuple<string, string>("AQuestionPage", "Test Params"));
+				NavigateTo(new Tuple<string, string>(PagesNames.AQuestionPage, "Test Params"));
 			}
 			catch (Exception e) {
 				Debugger.Break();
 			}
 		}
 
+		/// <summary>
+		/// Save the Basic Information
+		/// </summary>
 		private void SaveHandler() {
-
+			Messenger.Default.Send<GeneralMessages>(GeneralMessages.SAVE_INFO);
 		}
 
 		private void SelectHandler() {
@@ -149,7 +155,11 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 
 		private void DeleteHandler() {
 
-		}		
+		}
+
+		private void LogoutHandler() {
+			this._navigationService.NavigateTo(PagesNames.LoginPage);
+		}
 
 		public void NavigateTo(Tuple<string, string> args) {
 			this._navigationService.NavigateTo(args.Item1, args.Item1);

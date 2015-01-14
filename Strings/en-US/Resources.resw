@@ -138,6 +138,9 @@
   <data name="LoginButton.Content" xml:space="preserve">
     <value>login</value>
   </data>
+  <data name="LogoutButton.Label" xml:space="preserve">
+    <value>logout</value>
+  </data>
   <data name="Media.Header" xml:space="preserve">
     <value>media</value>
   </data>

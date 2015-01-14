@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
+using TrustworthyCompanion.View;
 using TrustworthyCompanion.View.Admin;
 using TrustworthyCompanion.View.Admin.Question;
 using TrustworthyCompanion.ViewModel.Admin;
@@ -48,6 +49,7 @@ namespace TrustworthyCompanion.ViewModel {
 
 		private INavigationService CreateNavigationService() {
 			var navigationService = new NavigationService();
+			navigationService.Configure("LoginPage", typeof(LoginPage));
 			navigationService.Configure("APivotPage", typeof(APivotPage));
 			navigationService.Configure("AQuestionPage", typeof(AQuestionPage));
 

@@ -59,6 +59,9 @@
 				<AppBarButton x:Uid="MultiselectButton" Tag="{Binding MultipleSelect}" Command="{Binding SelectCommand}" Visibility="{Binding Path=SelectButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Bullets" />
 				<AppBarButton x:Uid="DeleteButton" Command="{Binding DeleteCommand}" Visibility="{Binding Path=DeleteButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Delete" />
 			</CommandBar.PrimaryCommands>
+			<CommandBar.SecondaryCommands>
+				<AppBarButton x:Uid="LogoutButton" Command="{Binding LogoutCommand}" />
+			</CommandBar.SecondaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>
 </Page>

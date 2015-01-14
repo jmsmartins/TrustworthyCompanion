@@ -5,19 +5,28 @@
     xmlns:local="using:TrustworthyCompanion.View.Admin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:i="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	DataContext="{Binding ABasicInformationViewModel, Source={StaticResource ViewModelLocator}}"
     mc:Ignorable="d">
-    
-    <Grid>
+
+	<i:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding ControlLoadedCommand}">
+			</core:InvokeCommandAction>
+		</core:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+
+	<Grid>
 		<StackPanel Orientation="Vertical" Margin="0,0,15,0">
 			<TextBlock Text="Name" FontSize="18" />
-			<TextBox Text="" />
+			<TextBox Text="{Binding Path=BasicInformation.Name, Mode=TwoWay}" />
 			<TextBlock Text="Phone Number" FontSize="18" />
-			<TextBox Text="" />
+			<TextBox Text="{Binding Path=BasicInformation.Phone, Mode=TwoWay}" />
 			<TextBlock Text="Email" FontSize="18" />
-			<TextBox Text="" />
+			<TextBox Text="{Binding Path=BasicInformation.Email, Mode=TwoWay}" />
 			<TextBlock Text="Address" FontSize="18" />
-			<TextBox Height="150" Text="" />
+			<TextBox Height="150" TextWrapping="Wrap" Text="{Binding Path=BasicInformation.Address, Mode=TwoWay}" />
 		</StackPanel>
     </Grid>
 </UserControl>

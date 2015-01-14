@@ -82,9 +82,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Database\BasicInformation.cs" />
     <Compile Include="Database\DatabaseService.cs" />
+    <Compile Include="Database\QuestionsList.cs" />
+    <Compile Include="Messages\GeneralMessages.cs" />
     <Compile Include="Messages\SelectionModeChange.cs" />
+    <Compile Include="Model\BasicInformationModel.cs" />
+    <Compile Include="Model\QuestionModel.cs" />
     <Compile Include="Tools\ItemClickCommand.cs" />
+    <Compile Include="Tools\ListViewHelper.cs" />
+    <Compile Include="Tools\PagesNames.cs" />
     <Compile Include="Tools\ValueConverters.cs" />
     <Compile Include="ViewModel\Admin\ABasicInformationViewModel.cs" />
     <Compile Include="ViewModel\Admin\APivotPageViewModel.cs" />
@@ -100,15 +107,6 @@
     </Compile>
     <Compile Include="View\Admin\AQuestionListView.xaml.cs">
       <DependentUpon>AQuestionListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\Question\AdminQuestionMediaView.xaml.cs">
-      <DependentUpon>AdminQuestionMediaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\Question\AdminQuestionPage.xaml.cs">
-      <DependentUpon>AdminQuestionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\Question\AdminQuestionView.xaml.cs">
-      <DependentUpon>AdminQuestionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\Question\AQuestionMediaView.xaml.cs">
       <DependentUpon>AQuestionMediaView.xaml</DependentUpon>
@@ -161,18 +159,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Admin\Question\AdminQuestionMediaView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\Question\AdminQuestionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\Question\AdminQuestionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Admin\Question\AQuestionMediaView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,7 +196,15 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WP81, Version=3.8.7.4">
+      <Name>SQLite for Windows Phone 8.1</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

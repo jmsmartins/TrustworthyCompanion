@@ -1,7 +1,11 @@
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using TrustworthyCompanion.Database;
+using TrustworthyCompanion.Tools;
 
 namespace TrustworthyCompanion.ViewModel {
 	/// <summary>
@@ -18,6 +22,9 @@ namespace TrustworthyCompanion.ViewModel {
 	/// </summary>
 	public class LoginPageViewModel : ViewModelBase {
 
+		// Session
+		private bool _hasSession = true;
+
 		// Navigation service
 		private INavigationService _navigationService;
 
@@ -26,18 +33,19 @@ namespace TrustworthyCompanion.ViewModel {
 		/// </summary>
 		public LoginPageViewModel(INavigationService navigationService) {
 			this._navigationService = navigationService;
+			// Set pages names
+			PagesNames.SetPagesNames();
 
-			this.LoginCommand = new RelayCommand(() => LoginClickHandler(true));
+			this.PageLoadedCommand = new RelayCommand(PageLoaded);
+			this.LoginCommand = new RelayCommand(LoginClickHandler);
 			this.DetailsCommand = new RelayCommand<Tuple<string, string>>((args) => NavigateTo(args));
-
-			// TODO - temporary data (to delete)
-			this.Username = "admin";
-			this.Password = "admin";
 		}
 
 		#region RELAY COMMANDS
-		public RelayCommand<Tuple<string, string>> DetailsCommand { get; set; }
+		public RelayCommand PageLoadedCommand { get; private set; }
 		public RelayCommand LoginCommand { get; private set; }
+		public RelayCommand<Tuple<string, string>> DetailsCommand { get; set; }
+		
 		#endregion
 
 		#region PROPERTIES
@@ -60,13 +68,35 @@ namespace TrustworthyCompanion.ViewModel {
 		}
 		#endregion
 
+		private async void PageLoaded() {
+			// TODO - temporary data (to delete)
+			this.Username = "admin";
+			this.Password = "admin";
+
+			await Setup();
+
+			if(_hasSession) {
+				LoginClickHandler();
+			}
+		}
+
+		public async Task Setup() {
+			try {
+				// Load the Database
+				await DatabaseService.LoadDatabase();
+			} catch(Exception e) {
+				Debug.WriteLine(e.Message);
+			}
+		}
+
 		public void NavigateTo(Tuple<string, string> args) {
 			this._navigationService.NavigateTo(args.Item1, args.Item1);
 		}
 
-		private void LoginClickHandler(bool value) {
+		private void LoginClickHandler() {
 			if(Username == "admin" && Password == "admin") {
-				NavigateTo(new Tuple<string, string>("APivotPage", "Test Params"));
+				_hasSession = true;
+				NavigateTo(new Tuple<string, string>(PagesNames.APivotPage, "Test Params"));
 			} else {
 				return;
 			}

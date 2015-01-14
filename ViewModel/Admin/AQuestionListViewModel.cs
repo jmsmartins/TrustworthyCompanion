@@ -1,23 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
+using TrustworthyCompanion.Database;
 using TrustworthyCompanion.Messages;
+using TrustworthyCompanion.Model;
+using TrustworthyCompanion.Tools;
+using Windows.UI.Xaml.Controls;
 
 namespace TrustworthyCompanion.ViewModel.Admin {
 	public class AQuestionListViewModel : ViewModelBase {
+
+		// Navigation service
+		private INavigationService _navigationService;
+
 		/// <summary>
 		/// Initializes a new instance of the AdminBasicInformationViewModel class.
 		/// </summary>
-		public AQuestionListViewModel() {
-			InitViewModel();
+		public AQuestionListViewModel(INavigationService navigationService) {
+			this._navigationService = navigationService;
+			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
+			this.ListItemClick = new RelayCommand<QuestionModel>((item) => ListItemClickHandler(item));
 		}
 
+		#region RELAY COMMANDS
+		public RelayCommand ControlLoadedCommand { get; private set; }
+		public RelayCommand<QuestionModel> ListItemClick { get; private set; }
+		#endregion
+
 		#region PROPERTIES
+		/// <summary>
+		/// The Questions list
+		/// </summary>
+		private ObservableCollection<QuestionModel> _questionsList;
+		public ObservableCollection<QuestionModel> QuestionsList {
+			get { return _questionsList; }
+			set { Set(() => this.QuestionsList, ref _questionsList, value); }
+		}
+
 		/// <summary>
 		/// The ListView selection mode property
 		/// </summary>
@@ -26,19 +53,58 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 			get { return _multipleSelect; }
 			set { Set(() => this.MultipleSelect, ref _multipleSelect, value); }
 		}
+
+		/// <summary>
+		/// The ListViewItem IsClick enabled property
+		/// </summary>
+		private bool _isClickEnabled;
+		public bool IsClickEnabled {
+			get { return _isClickEnabled; }
+			set { Set(() => this.IsClickEnabled, ref _isClickEnabled, value); }
+		}
 		#endregion
 
-		private void InitViewModel() {
+		/// <summary>
+		/// When the control loads, set properties
+		/// </summary>
+		private async void ControlLoaded() {
 			// Subscribe the messenger for messages sent to it
 			if(!SimpleIoc.Default.IsRegistered<SelectionModeChange>()) {
 				Messenger.Default.Register<SelectionModeChange>(this, (action) => OnSelectionModeChange(action));
 			}
+
+			this.MultipleSelect = false;
+			this.IsClickEnabled = true;
+
+			await LoadData();
 		}
 
+		private async Task LoadData() {
+			QuestionsList = await DatabaseService.GetQuestions();
+		}
+
+		/// <summary>
+		/// Handles the click in each ListViewItem
+		/// </summary>
+		/// <param name="item"></param>
+		private void ListItemClickHandler(QuestionModel item) {
+			if(!this.MultipleSelect) {
+				NavigateTo(new Tuple<string, string>(PagesNames.AQuestionPage, "Test Params"));
+			}
+			else {
+				return;
+			}
+		}
 
 		private void OnSelectionModeChange(SelectionModeChange message) {
 			MultipleSelect = message.MultipleSelect;
 		}
+
+		#region NAVIGATION SERVICE
+		public void NavigateTo(Tuple<string, string> args) {
+			this._navigationService.NavigateTo(args.Item1, args.Item1);
+		}
+		#endregion
 
 	}
 }

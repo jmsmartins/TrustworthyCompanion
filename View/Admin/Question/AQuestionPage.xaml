@@ -11,22 +11,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<Grid>
-		<Pivot x:Uid="Pivot" Title="QUESTION NAME" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+		<Pivot x:Uid="Pivot" Title="QUESTION NAME" x:Name="pivot" SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}" CommonNavigationTransitionInfo.IsStaggerElement="True">
             <!--Pivot item one-->
-            <PivotItem
+			<PivotItem
                 x:Uid="Question"
-                Margin="19,14.5,0,0"
-                DataContext="{Binding FirstGroup}"
-                CommonNavigationTransitionInfo.IsStaggerElement="True">
-                <!-- Admin Basic Information Page -->
+                Margin="19,14.5,0,0">
+				<!-- Admin Basic Information Page -->
 				<question:AQuestionView Margin="0,0,15,0" />
             </PivotItem>
 
             <!--Pivot item two-->
 			<PivotItem
                 x:Uid="Media"
-                Margin="19,14.5,0,0"
-                DataContext="{Binding SecondGroup}">
+                Margin="19,14.5,0,0">
 				<!-- Admin Questions List Page -->
 				<question:AQuestionMediaView Margin="0,0,15,0" />
 				
@@ -35,17 +32,10 @@
 	</Grid>
 	
 	<Page.BottomAppBar>
-		<CommandBar IsOpen="False">
+		<CommandBar>
 			<CommandBar.PrimaryCommands>
-				<AppBarButton x:Uid="SaveButton" Icon="Save" />
-				<AppBarButton x:Uid="DeleteButton" Icon="Delete" />
-				<AppBarButton x:Uid="CancelButton" Icon="Cancel" />
+				<AppBarButton x:Uid="SaveButton" Command="{Binding Path=SaveCommand}" Visibility="{Binding Path=SaveButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Save" />
 			</CommandBar.PrimaryCommands>
-			<CommandBar.SecondaryCommands>
-				<AppBarButton x:Uid="ImageButton" Icon="Pictures" />
-				<AppBarButton x:Uid="VideoButton" Icon="Video" />
-				<AppBarButton x:Uid="AudioButton" Icon="Audio" />
-			</CommandBar.SecondaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>
 </Page>

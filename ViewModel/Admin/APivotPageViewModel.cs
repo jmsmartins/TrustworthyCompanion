@@ -49,7 +49,17 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		#endregion
 
 		#region PROPERTIES
-
+		/// <summary>
+		/// The Selected Index property
+		/// </summary>
+		private int _selectedIndex;
+		public int SelectedIndex {
+			get { return _selectedIndex; }
+			set {
+				Set(() => this.SelectedIndex, ref _selectedIndex, value);
+				SelectionChangeHandler(_selectedIndex);
+			}
+		}
 
 		/// <summary>
 		/// The Multiple Select property
@@ -94,18 +104,6 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		public bool DeleteButtonVisibility {
 			get { return _deleteButtonVisibility; }
 			set { Set(() => this.DeleteButtonVisibility, ref _deleteButtonVisibility, value); }
-		}
-
-		/// <summary>
-		/// The Selected Index property
-		/// </summary>
-		private int _selectedIndex;
-		public int SelectedIndex {
-			get { return _selectedIndex; }
-			set {
-				Set(() => this.SelectedIndex, ref _selectedIndex, value);
-				SelectionChangeHandler(_selectedIndex);
-			}
 		}
 		#endregion
 

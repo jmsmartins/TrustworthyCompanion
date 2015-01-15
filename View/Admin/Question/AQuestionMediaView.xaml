@@ -5,26 +5,28 @@
     xmlns:local="using:TrustworthyCompanion.View.Admin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:i="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	DataContext="{Binding AQuestionMediaViewModel, Source={StaticResource ViewModelLocator}}"
     mc:Ignorable="d">
-    
-	<UserControl.Resources>
-		<DataTemplate x:Key="listTemplate">
-			<Grid HorizontalAlignment="Stretch" Margin="15,0,15,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="250" />
-					<ColumnDefinition Width="120" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding filename}" />
-				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding filetype}" />
-			</Grid>
-		</DataTemplate>
-	</UserControl.Resources>
-	
-    <Grid>
-		<!-- MEDIA -->
-		<TextBlock Text="Media" FontSize="18" />
-		<ListView x:Name="mediaList"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{StaticResource listTemplate}" />
 
-    </Grid>
+	<i:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding ControlLoadedCommand}">
+			</core:InvokeCommandAction>
+		</core:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+
+	<Grid HorizontalAlignment="Center">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		
+		<Button Grid.Row="0" Content="Add Photo" Command="{Binding MediaAddCommand}" CommandParameter="Photo" />
+		<Button Grid.Row="1" Content="Add Video" Command="{Binding MediaAddCommand}" CommandParameter="Video" />
+		<Button Grid.Row="2" Content="Add Audio" Command="{Binding MediaAddCommand}" CommandParameter="Audio" />
+
+	</Grid>
 </UserControl>

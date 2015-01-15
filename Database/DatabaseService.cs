@@ -89,6 +89,7 @@ namespace TrustworthyCompanion.Database {
 		}
 		#endregion
 
+		#region QUESTIONS
 		/// <summary>
 		/// Returns a collection of questions
 		/// </summary>
@@ -97,12 +98,16 @@ namespace TrustworthyCompanion.Database {
 			ObservableCollection<QuestionModel> questionsList = new ObservableCollection<QuestionModel>();
 
 			using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
-				await sqlConnection.QueryAsync<QuestionsList>("SELECT id, title FROM QuestionsList").ContinueWith((t) => {
+				await sqlConnection.QueryAsync<QuestionsList>("SELECT Id, Title, Message, AudioFile, PhotoFile, VideoFile FROM QuestionsList").ContinueWith((t) => {
 					if(t.Exception == null) {
 						foreach(var item in t.Result) {
 							QuestionModel notification = new QuestionModel() {
 								Id = item.Id,
-								Title = item.Title
+								Title = item.Title,
+								Message = item.Message,
+								AudioFile = item.AudioFile,
+								PhotoFile = item.PhotoFile,
+								VideoFile = item.VideoFile
 							};
 							questionsList.Add(notification);
 						}
@@ -111,6 +116,17 @@ namespace TrustworthyCompanion.Database {
 			}
 			return questionsList;
 		}
+
+		public static async Task UpdateQuestion(QuestionModel question) {
+			try {
+				using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
+					await sqlConnection.QueryAsync<QuestionsList>("UPDATE QuestionsList SET Title = ?, Message = ?, AudioFile = ?, PhotoFile = ?, VideoFile = ? WHERE Id = ?", question.Title, question.Message, question.AudioFile, question.PhotoFile, question.VideoFile, question.Id);
+				}
+			} catch(SQLiteException e) {
+				Debug.WriteLine(e.Message);
+			}
+		}
+		#endregion
 
 		# region INSERT DUMMY DATA (TO REMOVE)
 		public async static Task InsertDummyData() {
@@ -130,11 +146,15 @@ namespace TrustworthyCompanion.Database {
 
 					// Questions
 					for(int i = 1; i <= 10; i++) {
-						QuestionsList notificationsList = new QuestionsList() {
-							Title = "Question " + i.ToString()
+						QuestionsList questionsList = new QuestionsList() {
+							Title = "Question " + i.ToString(),
+							Message = "This is a message " + i.ToString(),
+							AudioFile = ApplicationData.Current.LocalFolder.Path + "/audio.m4a",
+							VideoFile = ApplicationData.Current.LocalFolder.Path + "/video.mp4",
+							PhotoFile = ApplicationData.Current.LocalFolder.Path + "/photo.jpg"
 						};
 
-						await sqlConnection.InsertAsync(notificationsList);
+						await sqlConnection.InsertAsync(questionsList);
 					}
 				}
 			} catch(SQLiteException e) {

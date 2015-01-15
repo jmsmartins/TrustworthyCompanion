@@ -6,24 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	DataContext="{Binding AQuestionViewModel, Source={StaticResource ViewModelLocator}}"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
-    
-    <Grid>
-		<StackPanel Orientation="Vertical">
-			<!-- Title Panel -->
-			<StackPanel Grid.Row="0" Margin="19,0,0,0">
-				<TextBlock Text="question" Style="{ThemeResource HeaderTextBlockStyle}" Margin="0,-6.5,0,26.5" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" />
-			</StackPanel>
+	xmlns:i="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d">
 
+	<i:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding ControlLoadedCommand}" />
+		</core:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+
+	<Grid>
+		<StackPanel Orientation="Vertical">
 			<!-- TITLE -->
 			<TextBlock Text="Title" FontSize="18" />
-			<TextBox Text="" />
+			<TextBox Text="{Binding Path=Question.Title, Mode=TwoWay}" />
 			
 			<!-- MESSAGE -->
 			<TextBlock Text="Message" FontSize="18" />
-			<TextBox Height="150" Text="" />
+			<TextBox Height="150" TextWrapping="Wrap" Text="{Binding Path=Question.Message, Mode=TwoWay}" />
 		</StackPanel>
     </Grid>
 </UserControl>

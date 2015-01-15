@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -13,7 +10,6 @@ using TrustworthyCompanion.Database;
 using TrustworthyCompanion.Messages;
 using TrustworthyCompanion.Model;
 using TrustworthyCompanion.Tools;
-using Windows.UI.Xaml.Controls;
 
 namespace TrustworthyCompanion.ViewModel.Admin {
 	public class AQuestionListViewModel : ViewModelBase {
@@ -89,7 +85,7 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		/// <param name="item"></param>
 		private void ListItemClickHandler(QuestionModel item) {
 			if(!this.MultipleSelect) {
-				NavigateTo(new Tuple<string, string>(PagesNames.AQuestionPage, "Test Params"));
+				NavigateTo(new Tuple<string, object>(PagesNames.AQuestionPage, item));
 			}
 			else {
 				return;
@@ -101,8 +97,8 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		}
 
 		#region NAVIGATION SERVICE
-		public void NavigateTo(Tuple<string, string> args) {
-			this._navigationService.NavigateTo(args.Item1, args.Item1);
+		public void NavigateTo(Tuple<string, object> args) {
+			this._navigationService.NavigateTo(args.Item1, args.Item2);
 		}
 		#endregion
 

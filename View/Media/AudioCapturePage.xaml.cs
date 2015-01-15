@@ -5,12 +5,12 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
-namespace TrustworthyCompanion.View.Admin.Question {
+namespace TrustworthyCompanion.View.Media {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class AQuestionPage : Page {
-		public AQuestionPage() {
+	public sealed partial class AudioCapturePage : Page {
+		public AudioCapturePage() {
 			this.InitializeComponent();
 		}
 

@@ -88,7 +88,9 @@
     <Compile Include="Messages\GeneralMessages.cs" />
     <Compile Include="Messages\SelectionModeChange.cs" />
     <Compile Include="Model\BasicInformationModel.cs" />
+    <Compile Include="Model\MediaModel.cs" />
     <Compile Include="Model\QuestionModel.cs" />
+    <Compile Include="Tools\MediaCaptureTool.cs" />
     <Compile Include="Tools\ItemClickCommand.cs" />
     <Compile Include="Tools\ListViewHelper.cs" />
     <Compile Include="Tools\PagesNames.cs" />
@@ -97,8 +99,12 @@
     <Compile Include="ViewModel\Admin\APivotPageViewModel.cs" />
     <Compile Include="ViewModel\Admin\AQuestionListViewModel.cs" />
     <Compile Include="ViewModel\Admin\Question\AQuestionMediaViewModel.cs" />
+    <Compile Include="ViewModel\Admin\Question\AQuestionPageViewModel.cs" />
     <Compile Include="ViewModel\Admin\Question\AQuestionViewModel.cs" />
     <Compile Include="ViewModel\LoginPageViewModel.cs" />
+    <Compile Include="ViewModel\Media\AudioCaptureViewModel.cs" />
+    <Compile Include="ViewModel\Media\PhotoCaptureViewModel.cs" />
+    <Compile Include="ViewModel\Media\VideoCaptureViewModel.cs" />
     <Compile Include="View\Admin\ABasicInformationView.xaml.cs">
       <DependentUpon>ABasicInformationView.xaml</DependentUpon>
     </Compile>
@@ -116,6 +122,15 @@
     </Compile>
     <Compile Include="View\Admin\Question\AQuestionView.xaml.cs">
       <DependentUpon>AQuestionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Media\AudioCapturePage.xaml.cs">
+      <DependentUpon>AudioCapturePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Media\PhotoCapturePage.xaml.cs">
+      <DependentUpon>PhotoCapturePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Media\VideoCapturePage.xaml.cs">
+      <DependentUpon>VideoCapturePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -170,6 +185,18 @@
     <Page Include="View\Admin\Question\AQuestionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Media\AudioCapturePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Media\PhotoCapturePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Media\VideoCapturePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>

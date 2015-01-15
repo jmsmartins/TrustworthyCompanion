@@ -34,6 +34,7 @@ namespace TrustworthyCompanion.View.Media {
 			_mediaCapture = new MediaCaptureTool();
 			CameraCapture.Source = await _mediaCapture.Initialize();
 			await _mediaCapture.StartPreview();
+			_storageFile = null;
 		}
 
 		protected override async void OnNavigatedFrom(NavigationEventArgs e) {

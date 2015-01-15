@@ -65,7 +65,7 @@ namespace TrustworthyCompanion.ViewModel.Admin.Question {
 				break;
 
 				case "Video":
-					this._navigationService.NavigateTo(PagesNames.VideoCapturePage, "");
+					this._navigationService.NavigateTo(PagesNames.VideoCapturePage, _question);
 				break;
 			}
 		}

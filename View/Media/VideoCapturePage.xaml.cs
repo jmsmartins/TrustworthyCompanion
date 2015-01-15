@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using TrustworthyCompanion.Model;
 using TrustworthyCompanion.Tools;
 using Windows.Media.Devices;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -15,8 +15,9 @@ namespace TrustworthyCompanion.View.Media {
 	/// </summary>
 	public sealed partial class VideoCapturePage : Page {
 
-		private MediaCaptureTool _cameraCapture;
-		private StorageFile _videoFile;
+		private MediaCaptureTool _mediaCapture;
+		private StorageFile _storageFile = null;
+		private bool _recording = false;
 
 		public VideoCapturePage() {
 			this.InitializeComponent();
@@ -28,24 +29,27 @@ namespace TrustworthyCompanion.View.Media {
 		/// <param name="e">Event data that describes how this page was reached.
 		/// This parameter is typically used to configure the page.</param>
 		protected async override void OnNavigatedTo(NavigationEventArgs e) {
+			QuestionModel message = (QuestionModel)e.Parameter;
+			Messenger.Default.Send<QuestionModel>(message);
+
 			// Init and show preview
-			_cameraCapture = new MediaCaptureTool();
-			PreviewElement.Source = await _cameraCapture.Initialize(CaptureUse.Video);
-			await _cameraCapture.StartPreview();
-			_videoFile = null;
+			_mediaCapture = new MediaCaptureTool();
+			CameraCapture.Source = await _mediaCapture.Initialize(CaptureUse.Video);
+			await _mediaCapture.StartPreview();
+			_storageFile = null;
 		}
 
 		protected override async void OnNavigatedFrom(NavigationEventArgs e) {
 			// Release resources
-			if(_cameraCapture != null) {
-				await _cameraCapture.StopPreview();
-				PreviewElement.Source = null;
-				_cameraCapture.Dispose();
-				_cameraCapture = null;
+			if(_mediaCapture != null) {
+				await _mediaCapture.StopPreview();
+				CameraCapture.Source = null;
+				_mediaCapture.Dispose();
+				_mediaCapture = null;
 			}
 		}
 
-		private async void BtnRecordVideo_Click(object sender, RoutedEventArgs e) {
+		/*private async void BtnRecordVideo_Click(object sender, RoutedEventArgs e) {
 			if(_videoFile == null) {
 				// Start video recording
 				_videoFile = await _cameraCapture.StartVideoRecording();
@@ -65,12 +69,21 @@ namespace TrustworthyCompanion.View.Media {
 				BtnRecordVideo.Content = "Start Video Recording";
 				_videoFile = null;
 			}
-		}
+		}*/
 
-		private void PlaybackElement_MediaEnded(object sender, RoutedEventArgs e) {
-			PreviewElement.Visibility = Visibility.Visible;
-			BtnRecordVideo.Visibility = Visibility.Visible;
-			PlaybackElement.Visibility = Visibility.Collapsed;
+		private async void CaptureVideoButton_Click(object sender, RoutedEventArgs e) {
+			if(!_recording) {
+				_recording = true;
+				_storageFile = await _mediaCapture.StartVideoRecording();
+			} else {
+				// Stop video recording
+				await _mediaCapture.StopVideoRecording();
+				CapturedVideo.Tag = _storageFile.Path;
+				_recording = false;
+
+				// Start playback
+				//PlaybackElement.SetSource(await _videoFile.OpenReadAsync(), _videoFile.ContentType);
+			}
 		}
 	}
 }

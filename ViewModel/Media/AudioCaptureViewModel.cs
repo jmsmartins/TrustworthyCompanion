@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -15,7 +14,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 	public class AudioCaptureViewModel : ViewModelBase {
 
 		private MediaCaptureTool _mediaCapture;
-		private StorageFile _audioStorageFile = null;
+		private StorageFile _storageFile = null;
 		private bool _recording = false;
 
 		/// <summary>
@@ -31,7 +30,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 			this.PageLoadedCommand = new RelayCommand(PageLoaded);
 			this.PageUnloadedCommand = new RelayCommand(PageUnloaded);
 			this.RecordAudioCommand = new RelayCommand(RecordAudioHandler);
-			this.DeleteAudioCommand = new RelayCommand(DeleteAudioHandler);
+			this.DeleteCommand = new RelayCommand(DeleteAudioHandler);
 			this.PlayAudioCommand = new RelayCommand<object>((item) => PlayAudioHandler(item));
 		}
 
@@ -39,8 +38,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		public RelayCommand PageLoadedCommand { get; private set; }
 		public RelayCommand PageUnloadedCommand { get; private set; }
 		public RelayCommand RecordAudioCommand { get; private set; }
-		public RelayCommand SaveAudioCommand { get; private set; }
-		public RelayCommand DeleteAudioCommand { get; private set; }
+		public RelayCommand DeleteCommand { get; private set; }
 		public RelayCommand<object> PlayAudioCommand { get; private set; }
 		#endregion
 
@@ -92,23 +90,25 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		/// <summary>
 		/// When the page unloads
 		/// </summary>
-		private async void PageUnloaded() {
+		private void PageUnloaded() {
 			// Release resources
 			if(_mediaCapture != null) {
 				_mediaCapture.Dispose();
 				_mediaCapture = null;
 			}
+
+			// Unregister the messenger to avoid receiving more messages when it's not open
+			Messenger.Default.Unregister<QuestionModel>(this, (action) => SetupProperties(action));
 		}
 
 		
 		private async void RecordAudioHandler() {
-
 			if(!_recording) {
 				_recording = true;
 				PlayEnabled = false;
 				RecordEnabled = true;
 				// Start video recording
-				_audioStorageFile = await _mediaCapture.StartAudioRecording();
+				_storageFile = await _mediaCapture.StartAudioRecording();
 			} else {
 				_recording = false;
 				PlayEnabled = true;
@@ -117,7 +117,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 				await _mediaCapture.StopAudioRecording();
 
 				// Save the info to the database
-				Question.AudioFile = _audioStorageFile.Path;
+				Question.AudioFile = _storageFile.Path;
 				await DatabaseService.UpdateQuestion(Question);
 			}
 		}

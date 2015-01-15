@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using GalaSoft.MvvmLight.Messaging;
+using TrustworthyCompanion.Model;
 using TrustworthyCompanion.Tools;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -23,7 +14,8 @@ namespace TrustworthyCompanion.View.Media {
 	/// </summary>
 	public sealed partial class PhotoCapturePage : Page {
 
-		private MediaCaptureTool _cameraCapture;
+		private MediaCaptureTool _mediaCapture;
+		private StorageFile _storageFile = null;
 
 		public PhotoCapturePage() {
 			this.InitializeComponent();
@@ -34,36 +26,29 @@ namespace TrustworthyCompanion.View.Media {
 		/// </summary>
 		/// <param name="e">Event data that describes how this page was reached.
 		/// This parameter is typically used to configure the page.</param>
-		//protected override void OnNavigatedTo(NavigationEventArgs e) {
-		//}
+		protected async override void OnNavigatedTo(NavigationEventArgs e) {
+			QuestionModel message = (QuestionModel)e.Parameter;
+			Messenger.Default.Send<QuestionModel>(message);
 
-		protected override async void OnNavigatedTo(NavigationEventArgs e) {
 			// Init and show preview
-			_cameraCapture = new MediaCaptureTool();
-			PreviewElement.Source = await _cameraCapture.Initialize();
-			await _cameraCapture.StartPreview();
+			_mediaCapture = new MediaCaptureTool();
+			CameraCapture.Source = await _mediaCapture.Initialize();
+			await _mediaCapture.StartPreview();
 		}
 
 		protected override async void OnNavigatedFrom(NavigationEventArgs e) {
 			// Release resources
-			if(_cameraCapture != null) {
-				await _cameraCapture.StopPreview();
-				PreviewElement.Source = null;
-				_cameraCapture.Dispose();
-				_cameraCapture = null;
+			if(_mediaCapture != null) {
+				await _mediaCapture.StopPreview();
+				CameraCapture.Source = null;
+				_mediaCapture.Dispose();
+				_mediaCapture = null;
 			}
-		}
+		}		
 
-		private async void BtnCapturePhoto_Click(object sender, RoutedEventArgs e) {
-			// Take snapshot and add to ListView
-			// Disable button to prevent exception due to parallel capture usage
-			BtnCapturePhoto.IsEnabled = false;
-			var photoStorageFile = await _cameraCapture.CapturePhoto();
-
-			var bitmap = new BitmapImage();
-			await bitmap.SetSourceAsync(await photoStorageFile.OpenReadAsync());
-			PhotoListView.Items.Add(bitmap);
-			BtnCapturePhoto.IsEnabled = true;
+		private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+			_storageFile = await _mediaCapture.CapturePhoto();
+			CapturedPhoto.Tag = _storageFile.Path;
 		}
 	}
 }

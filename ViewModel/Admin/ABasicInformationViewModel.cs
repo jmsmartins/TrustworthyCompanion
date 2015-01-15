@@ -18,7 +18,6 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		/// </summary>
 		public ABasicInformationViewModel() {
 			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
-
 		}
 
 		#region RELAY COMMANDS

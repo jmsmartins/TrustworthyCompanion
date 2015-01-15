@@ -137,7 +137,7 @@ namespace TrustworthyCompanion.Database {
 					// Basic Information
 					BasicInformation info = new BasicInformation() {
 						Name = "John Doe",
-						Phone = "+351911520974",
+						Phone = "+351910000000",
 						Email = "trustworthycompanion@mailinator.com",
 						Address = "Rua Dr. António Bernardino de Almeida, 431, Porto"
 					};
@@ -148,10 +148,10 @@ namespace TrustworthyCompanion.Database {
 					for(int i = 1; i <= 10; i++) {
 						QuestionsList questionsList = new QuestionsList() {
 							Title = "Question " + i.ToString(),
-							Message = "This is a message " + i.ToString(),
-							AudioFile = ApplicationData.Current.LocalFolder.Path + "/audio.m4a",
-							VideoFile = ApplicationData.Current.LocalFolder.Path + "/video.mp4",
-							PhotoFile = ApplicationData.Current.LocalFolder.Path + "/photo.jpg"
+							Message = "This is a message " + i.ToString()
+							//AudioFile = ApplicationData.Current.LocalFolder.Path + "/audio.m4a",
+							//VideoFile = ApplicationData.Current.LocalFolder.Path + "/video.mp4",
+							//PhotoFile = ApplicationData.Current.LocalFolder.Path + "/photo.jpg"
 						};
 
 						await sqlConnection.InsertAsync(questionsList);

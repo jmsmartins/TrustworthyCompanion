@@ -52,7 +52,7 @@
     </Grid>
 	
 	<Page.BottomAppBar>
-		<CommandBar IsOpen="False">
+		<CommandBar>
 			<CommandBar.PrimaryCommands>
 				<AppBarButton x:Uid="NewButton" Command="{Binding NewQuestionCommand}" Visibility="{Binding Path=NewButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Add" />
 				<AppBarButton x:Uid="SaveButton" Command="{Binding SaveCommand}" Visibility="{Binding Path=SaveButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Save" />

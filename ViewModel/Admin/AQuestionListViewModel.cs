@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -69,6 +70,10 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 				Messenger.Default.Register<SelectionModeChange>(this, (action) => OnSelectionModeChange(action));
 			}
 
+			if(!SimpleIoc.Default.IsRegistered<GeneralMessages>()) {
+				Messenger.Default.Register<GeneralMessages>(this, (action) => OnMessageReceived(action));
+			}
+
 			this.MultipleSelect = false;
 			this.IsClickEnabled = true;
 
@@ -86,14 +91,33 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		private void ListItemClickHandler(QuestionModel item) {
 			if(!this.MultipleSelect) {
 				NavigateTo(new Tuple<string, object>(PagesNames.AQuestionPage, item));
-			}
-			else {
+			} else {
 				return;
 			}
 		}
 
 		private void OnSelectionModeChange(SelectionModeChange message) {
 			MultipleSelect = message.MultipleSelect;
+			IsClickEnabled = !MultipleSelect;
+		}
+
+		private async void OnMessageReceived(GeneralMessages message) {
+			if(message == GeneralMessages.DELETE_QUESTIONS) {
+				List<QuestionModel> toDelete = new List<QuestionModel>();
+				foreach(var item in QuestionsList) {
+					if(item.IsSelected) {
+						toDelete.Add(item);
+					}
+				}
+
+				// Remove from the list
+				foreach(var item in toDelete) {
+					QuestionsList.Remove(item);
+				}
+
+				// Delete the records from the database
+				await DatabaseService.DeleteQuestions(toDelete);
+			}
 		}
 
 		#region NAVIGATION SERVICE

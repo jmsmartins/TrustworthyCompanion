@@ -5,6 +5,7 @@
 	/// </summary>
 	public enum GeneralMessages {
 		SAVE_INFO,
-		SAVE_QUESTION
+		SAVE_QUESTION,
+		DELETE_QUESTIONS
 	}
 }

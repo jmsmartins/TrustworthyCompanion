@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -90,6 +91,43 @@ namespace TrustworthyCompanion.Database {
 		#endregion
 
 		#region QUESTIONS
+		public static async Task<QuestionModel> SaveNewQUestion(QuestionModel newQuestion) {
+			try {
+				using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
+					QuestionsList question = new QuestionsList() {
+						Title = newQuestion.Title,
+						Message = newQuestion.Message,
+						AudioFile = newQuestion.AudioFile,
+						PhotoFile = newQuestion.PhotoFile,
+						VideoFile = newQuestion.VideoFile
+					};
+
+					await sqlConnection.InsertAsync(question);
+				}
+			} catch(SQLiteException e) {
+				Debug.WriteLine(e.Message);
+			}
+
+			using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
+				await sqlConnection.QueryAsync<QuestionsList>("SELECT Id, Title, Message, AudioFile, PhotoFile, VideoFile FROM QuestionsList WHERE Id = (SELECT MAX(Id) FROM QuestionsList)").ContinueWith((t) => {
+					if(t.Exception == null) {
+						QuestionsList item = t.Result[0];
+						QuestionModel question = new QuestionModel() {
+							Id = item.Id,
+							Title = item.Title,
+							Message = item.Message,
+							AudioFile = item.AudioFile,
+							PhotoFile = item.PhotoFile,
+							VideoFile = item.VideoFile
+						};
+						newQuestion = question;
+					}
+				});
+			}
+
+			return newQuestion;
+		}
+
 		/// <summary>
 		/// Returns a collection of questions
 		/// </summary>
@@ -101,7 +139,7 @@ namespace TrustworthyCompanion.Database {
 				await sqlConnection.QueryAsync<QuestionsList>("SELECT Id, Title, Message, AudioFile, PhotoFile, VideoFile FROM QuestionsList").ContinueWith((t) => {
 					if(t.Exception == null) {
 						foreach(var item in t.Result) {
-							QuestionModel notification = new QuestionModel() {
+							QuestionModel question = new QuestionModel() {
 								Id = item.Id,
 								Title = item.Title,
 								Message = item.Message,
@@ -109,7 +147,7 @@ namespace TrustworthyCompanion.Database {
 								PhotoFile = item.PhotoFile,
 								VideoFile = item.VideoFile
 							};
-							questionsList.Add(notification);
+							questionsList.Add(question);
 						}
 					}
 				});
@@ -121,6 +159,37 @@ namespace TrustworthyCompanion.Database {
 			try {
 				using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
 					await sqlConnection.QueryAsync<QuestionsList>("UPDATE QuestionsList SET Title = ?, Message = ?, AudioFile = ?, PhotoFile = ?, VideoFile = ? WHERE Id = ?", question.Title, question.Message, question.AudioFile, question.PhotoFile, question.VideoFile, question.Id);
+				}
+			} catch(SQLiteException e) {
+				Debug.WriteLine(e.Message);
+			}
+		}
+
+		public static async Task DeleteQuestions(List<QuestionModel> questionsList) {
+			try {
+				using(SQLiteAsyncConnection sqlConnection = new SQLiteAsyncConnection(_database)) {
+					foreach(var item in questionsList) {
+						// First delete the files
+						if(item.AudioFile != "") {
+							var audio = await ApplicationData.Current.LocalFolder.GetFileAsync(Path.GetFileName(item.AudioFile));
+							await audio.DeleteAsync(StorageDeleteOption.PermanentDelete);
+						}
+
+						if(item.VideoFile != "") {
+							var video = await ApplicationData.Current.LocalFolder.GetFileAsync(Path.GetFileName(item.VideoFile));
+							await video.DeleteAsync(StorageDeleteOption.PermanentDelete);
+						}
+
+						if(item.PhotoFile != "") {
+							var photo = await ApplicationData.Current.LocalFolder.GetFileAsync(Path.GetFileName(item.PhotoFile));
+							await photo.DeleteAsync(StorageDeleteOption.PermanentDelete);
+						}
+
+						QuestionsList notif = new QuestionsList() {
+							Id = item.Id
+						};
+						await sqlConnection.DeleteAsync(notif);
+					}
 				}
 			} catch(SQLiteException e) {
 				Debug.WriteLine(e.Message);

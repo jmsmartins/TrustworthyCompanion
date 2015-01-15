@@ -56,8 +56,8 @@
 			<CommandBar.PrimaryCommands>
 				<AppBarButton x:Uid="NewButton" Command="{Binding NewQuestionCommand}" Visibility="{Binding Path=NewButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Add" />
 				<AppBarButton x:Uid="SaveButton" Command="{Binding SaveCommand}" Visibility="{Binding Path=SaveButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Save" />
-				<AppBarButton x:Uid="MultiselectButton" Tag="{Binding MultipleSelect}" Command="{Binding SelectCommand}" Visibility="{Binding Path=SelectButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Bullets" />
 				<AppBarButton x:Uid="DeleteButton" Command="{Binding DeleteCommand}" Visibility="{Binding Path=DeleteButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Delete" />
+				<AppBarButton x:Uid="MultiselectButton" Tag="{Binding MultipleSelect}" Command="{Binding SelectCommand}" Visibility="{Binding Path=SelectButtonVisibility, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Icon="Bullets" />				
 			</CommandBar.PrimaryCommands>
 			<CommandBar.SecondaryCommands>
 				<AppBarButton x:Uid="LogoutButton" Command="{Binding LogoutCommand}" />

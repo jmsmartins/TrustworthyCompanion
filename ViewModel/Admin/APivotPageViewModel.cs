@@ -8,7 +8,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using TrustworthyCompanion.Database;
 using TrustworthyCompanion.Messages;
+using TrustworthyCompanion.Model;
 using TrustworthyCompanion.Tools;
 using Windows.UI.Xaml.Controls;
 
@@ -67,7 +69,10 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		private bool _multipleSelect;
 		public bool MultipleSelect {
 			get { return _multipleSelect; }
-			set { Set(() => this.MultipleSelect, ref _multipleSelect, value); }
+			set {
+				Set(() => this.MultipleSelect, ref _multipleSelect, value);
+				ChangePageButtons(MultipleSelect);
+			}
 		}
 
 		/// <summary>
@@ -125,14 +130,18 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 			}
 		}
 
-		private void NewQuestionHandler() {
-			try {
-				// Tuple<UIElement, string> tupleValues = (Tuple<UIElement, string>)e.Parameter;
-				NavigateTo(new Tuple<string, string>(PagesNames.AQuestionPage, "Test Params"));
-			}
-			catch (Exception e) {
-				Debugger.Break();
-			}
+		private async void NewQuestionHandler() {
+			QuestionModel question = new QuestionModel() {
+				Title = "New Title",
+				Message = "",
+				AudioFile = "",
+				VideoFile = "",
+				PhotoFile = ""
+			};
+
+			QuestionModel newQuestion = await DatabaseService.SaveNewQUestion(question);
+
+			NavigateTo(new Tuple<string, QuestionModel>(PagesNames.AQuestionPage, newQuestion));
 		}
 
 		/// <summary>
@@ -152,15 +161,29 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		}
 
 		private void DeleteHandler() {
-
+			Messenger.Default.Send<GeneralMessages>(GeneralMessages.DELETE_QUESTIONS);
 		}
 
 		private void LogoutHandler() {
 			this._navigationService.NavigateTo(PagesNames.LoginPage);
 		}
 
-		public void NavigateTo(Tuple<string, string> args) {
-			this._navigationService.NavigateTo(args.Item1, args.Item1);
+		private void ChangePageButtons(bool multiSelect) {
+			if(multiSelect) {
+				NewButtonVisibility = false;
+				SaveButtonVisibility = false;
+				SelectButtonVisibility = true;
+				DeleteButtonVisibility = true;
+			} else {
+				NewButtonVisibility = true;
+				SaveButtonVisibility = false;
+				SelectButtonVisibility = true;
+				DeleteButtonVisibility = false;
+			}
+		}
+
+		public void NavigateTo(Tuple<string, QuestionModel> args) {
+			this._navigationService.NavigateTo(args.Item1, args.Item2);
 		}
 	}
 }

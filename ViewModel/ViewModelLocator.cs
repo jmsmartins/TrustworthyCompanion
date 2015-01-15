@@ -19,9 +19,13 @@ using TrustworthyCompanion.View;
 using TrustworthyCompanion.View.Admin;
 using TrustworthyCompanion.View.Admin.Question;
 using TrustworthyCompanion.View.Media;
+using TrustworthyCompanion.View.User;
+using TrustworthyCompanion.View.User.Question;
 using TrustworthyCompanion.ViewModel.Admin;
 using TrustworthyCompanion.ViewModel.Admin.Question;
 using TrustworthyCompanion.ViewModel.Media;
+using TrustworthyCompanion.ViewModel.User;
+using TrustworthyCompanion.ViewModel.User.Question;
 
 namespace TrustworthyCompanion.ViewModel {
 	/// <summary>
@@ -37,52 +41,117 @@ namespace TrustworthyCompanion.ViewModel {
 
 			var navigationService = this.CreateNavigationService();
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
-
 			SimpleIoc.Default.Register<IDialogService, DialogService>();
 
-			// Pages
 			SimpleIoc.Default.Register<LoginPageViewModel>();
-			SimpleIoc.Default.Register<APivotPageViewModel>();
+
+			// Admin Pages
+			SimpleIoc.Default.Register<ALandingPageViewModel>();
 			SimpleIoc.Default.Register<AQuestionPageViewModel>();
+
+			// Admin User Controls
+			SimpleIoc.Default.Register<ABasicInformationViewModel>();
+			SimpleIoc.Default.Register<AQuestionListViewModel>();
+			SimpleIoc.Default.Register<AQuestionViewModel>();
+			SimpleIoc.Default.Register<AQuestionMediaViewModel>();
+
+			// User Pages
+			SimpleIoc.Default.Register<USearchPageViewModel>();
+			SimpleIoc.Default.Register<ULandingPageViewModel>();
+			SimpleIoc.Default.Register<UQuestionPageViewModel>();
+
+			// User User Controls
+			SimpleIoc.Default.Register<UQuestionViewModel>();
+			SimpleIoc.Default.Register<UQuestionMediaViewModel>();
 
 			// Media Pages
 			SimpleIoc.Default.Register<PhotoCaptureViewModel>();
 			SimpleIoc.Default.Register<VideoCaptureViewModel>();
 			SimpleIoc.Default.Register<AudioCaptureViewModel>();
-
-			// User Controls
-			SimpleIoc.Default.Register<ABasicInformationViewModel>();
-			SimpleIoc.Default.Register<AQuestionListViewModel>();
-			SimpleIoc.Default.Register<AQuestionViewModel>();
-			SimpleIoc.Default.Register<AQuestionMediaViewModel>();
+			SimpleIoc.Default.Register<PhotoShowViewModel>();
+			SimpleIoc.Default.Register<VideoShowViewModel>();
+			SimpleIoc.Default.Register<AudioShowViewModel>();
 		}
 
 		private INavigationService CreateNavigationService() {
 			var navigationService = new NavigationService();
-			// Pages
+
 			navigationService.Configure("LoginPage", typeof(LoginPage));
-			navigationService.Configure("APivotPage", typeof(APivotPage));
+
+			// Admin Pages
+			navigationService.Configure("ALandingPage", typeof(ALandingPage));
 			navigationService.Configure("AQuestionPage", typeof(AQuestionPage));
+
+			// User Pages
+			navigationService.Configure("USearchPage", typeof(USearchPage));
+			navigationService.Configure("ULandingPage", typeof(ULandingPage));
+			navigationService.Configure("UQuestionPage", typeof(UQuestionPage));
 
 			// Media
 			navigationService.Configure("PhotoCapturePage", typeof(PhotoCapturePage));
 			navigationService.Configure("VideoCapturePage", typeof(VideoCapturePage));
 			navigationService.Configure("AudioCapturePage", typeof(AudioCapturePage));
 
+			navigationService.Configure("PhotoShowPage", typeof(PhotoShowPage));
+			navigationService.Configure("VideoShowPage", typeof(VideoShowPage));
+			navigationService.Configure("AudioShowPage", typeof(AudioShowPage));
+
 			return navigationService;
 		}
 
-		# region PAGES
 		public LoginPageViewModel LoginPageViewModel {
 			get { return ServiceLocator.Current.GetInstance<LoginPageViewModel>(); }
 		}
 
-		public APivotPageViewModel APivotPageViewModel {
-			get { return ServiceLocator.Current.GetInstance<APivotPageViewModel>();	}
+		# region ADMIN PAGES
+		public ALandingPageViewModel APivotPageViewModel {
+			get { return ServiceLocator.Current.GetInstance<ALandingPageViewModel>();	}
 		}
 
 		public AQuestionPageViewModel AQuestionPageViewModel {
 			get { return ServiceLocator.Current.GetInstance<AQuestionPageViewModel>(); }
+		}
+		#endregion
+
+		#region ADMIN USER CONTROLS
+		public AQuestionViewModel AQuestionViewModel {
+			get { return ServiceLocator.Current.GetInstance<AQuestionViewModel>(); }
+		}
+
+		public AQuestionMediaViewModel AQuestionMediaViewModel {
+			get { return ServiceLocator.Current.GetInstance<AQuestionMediaViewModel>(); }
+		}
+
+		public ABasicInformationViewModel ABasicInformationViewModel {
+			get { return ServiceLocator.Current.GetInstance<ABasicInformationViewModel>(); }
+		}
+
+		public AQuestionListViewModel AQuestionListViewModel {
+			get { return ServiceLocator.Current.GetInstance<AQuestionListViewModel>(); }
+		}
+		#endregion
+
+		#region USER PAGES
+		public USearchPageViewModel USearchPageViewModel {
+			get { return ServiceLocator.Current.GetInstance<USearchPageViewModel>(); }
+		}
+
+		public ULandingPageViewModel UPivotPageViewModel {
+			get { return ServiceLocator.Current.GetInstance<ULandingPageViewModel>(); }
+		}
+
+		public UQuestionPageViewModel UQuestionPageViewModel {
+			get { return ServiceLocator.Current.GetInstance<UQuestionPageViewModel>(); }
+		}
+		#endregion
+
+		#region USER USER CONTROLS
+		public UQuestionViewModel UQuestionViewModel {
+			get { return ServiceLocator.Current.GetInstance<UQuestionViewModel>(); }
+		}
+
+		public UQuestionMediaViewModel UQuestionMediaViewModel {
+			get { return ServiceLocator.Current.GetInstance<UQuestionMediaViewModel>(); }
 		}
 		#endregion
 
@@ -98,23 +167,17 @@ namespace TrustworthyCompanion.ViewModel {
 		public AudioCaptureViewModel AudioCaptureViewModel {
 			get { return ServiceLocator.Current.GetInstance<AudioCaptureViewModel>(); }
 		}
-		#endregion
 
-		#region USER CONTROLS
-		public AQuestionViewModel AQuestionViewModel {
-			get { return ServiceLocator.Current.GetInstance<AQuestionViewModel>(); }
+		public PhotoShowViewModel PhotoShowViewModel {
+			get { return ServiceLocator.Current.GetInstance<PhotoShowViewModel>(); }
 		}
 
-		public AQuestionMediaViewModel AQuestionMediaViewModel {
-			get { return ServiceLocator.Current.GetInstance<AQuestionMediaViewModel>();	}
+		public VideoShowViewModel VideoShowViewModel {
+			get { return ServiceLocator.Current.GetInstance<VideoShowViewModel>(); }
 		}
 
-		public ABasicInformationViewModel ABasicInformationViewModel {
-			get { return ServiceLocator.Current.GetInstance<ABasicInformationViewModel>(); }
-		}
-
-		public AQuestionListViewModel AQuestionListViewModel {
-			get { return ServiceLocator.Current.GetInstance<AQuestionListViewModel>(); }
+		public AudioShowViewModel AudioShowViewModel {
+			get { return ServiceLocator.Current.GetInstance<AudioShowViewModel>(); }
 		}
 		#endregion
 

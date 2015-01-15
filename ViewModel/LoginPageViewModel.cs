@@ -23,7 +23,7 @@ namespace TrustworthyCompanion.ViewModel {
 	public class LoginPageViewModel : ViewModelBase {
 
 		// Session
-		private bool _hasSession = true;
+		private bool _hasSession = false;
 
 		// Navigation service
 		private INavigationService _navigationService;
@@ -37,13 +37,15 @@ namespace TrustworthyCompanion.ViewModel {
 			PagesNames.SetPagesNames();
 
 			this.PageLoadedCommand = new RelayCommand(PageLoaded);
-			this.LoginCommand = new RelayCommand(LoginClickHandler);
+			this.LoginCommand = new RelayCommand(LoginHandler);
+			this.LoginAsGuestCommand = new RelayCommand(LoginAsGuestHandler);
 			this.DetailsCommand = new RelayCommand<Tuple<string, string>>((args) => NavigateTo(args));
 		}
 
 		#region RELAY COMMANDS
 		public RelayCommand PageLoadedCommand { get; private set; }
 		public RelayCommand LoginCommand { get; private set; }
+		public RelayCommand LoginAsGuestCommand { get; private set; }
 		public RelayCommand<Tuple<string, string>> DetailsCommand { get; set; }
 		
 		#endregion
@@ -75,8 +77,11 @@ namespace TrustworthyCompanion.ViewModel {
 
 			await Setup();
 
+			// TODO Remove later on
 			if(_hasSession) {
-				LoginClickHandler();
+				LoginHandler();
+			} else {
+				LoginAsGuestHandler();
 			}
 		}
 
@@ -90,16 +95,20 @@ namespace TrustworthyCompanion.ViewModel {
 		}
 
 		public void NavigateTo(Tuple<string, string> args) {
-			this._navigationService.NavigateTo(args.Item1, args.Item1);
+			this._navigationService.NavigateTo(args.Item1, args.Item2);
 		}
 
-		private void LoginClickHandler() {
+		private void LoginHandler() {
 			if(Username == "admin" && Password == "admin") {
 				_hasSession = true;
-				NavigateTo(new Tuple<string, string>(PagesNames.APivotPage, "Test Params"));
+				NavigateTo(new Tuple<string, string>(PagesNames.ALandingPage, ""));
 			} else {
 				return;
 			}
+		}
+
+		private void LoginAsGuestHandler() {
+			NavigateTo(new Tuple<string, string>(PagesNames.USearchPage, ""));
 		}
 	}
 }

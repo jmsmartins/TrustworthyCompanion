@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="TrustworthyCompanion.View.User.Question.UQuestionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrustworthyCompanion.View.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:question="using:TrustworthyCompanion.View.User.Question"
+    mc:Ignorable="d"
+    DataContext="{Binding UQuestionPageViewModel, Source={StaticResource ViewModelLocator}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Grid>
+		<Pivot x:Uid="Pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+			<!--Pivot item one-->
+			<PivotItem
+                x:Uid="Question"
+                Margin="19,14.5,0,0">
+				<!-- Admin Basic Information Page -->
+				<question:UQuestionView Margin="0,0,15,0" />
+			</PivotItem>
+
+			<!--Pivot item two-->
+			<PivotItem
+                x:Uid="Media"
+                Margin="19,14.5,0,0">
+				<!-- Admin Questions List Page -->
+				<question:UQuestionMediaView Margin="0,0,15,0" />
+
+			</PivotItem>
+		</Pivot>
+	</Grid>
+</Page>

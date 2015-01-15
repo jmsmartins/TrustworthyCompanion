@@ -13,8 +13,10 @@
 
 	<i:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
-			<core:InvokeCommandAction Command="{Binding PageLoadedCommand}">
-			</core:InvokeCommandAction>
+			<core:InvokeCommandAction Command="{Binding PageLoadedCommand}" />
+		</core:EventTriggerBehavior>
+		<core:EventTriggerBehavior EventName="Unloaded">
+			<core:InvokeCommandAction Command="{Binding PageUnloadedCommand}" />
 		</core:EventTriggerBehavior>
 	</i:Interaction.Behaviors>
 

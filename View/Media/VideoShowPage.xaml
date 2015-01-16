@@ -23,6 +23,6 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<MediaElement Grid.Row="0" x:Name="CapturedVideo" Source="{Binding Path=Question.VideoFile}" Margin="12" AutoPlay="False" />
-		<ToggleButton Grid.Row="1" Content="Play" Command="{Binding PlayStopCommand}" HorizontalAlignment="Center" Width="150" Height="75" CommandParameter="{Binding ElementName=CapturedVideo}" />
+		<ToggleButton Grid.Row="1" Content="Play/Stop" Command="{Binding PlayStopCommand}" HorizontalAlignment="Center" Width="150" Height="75" CommandParameter="{Binding ElementName=CapturedVideo}" />
 	</Grid>
 </Page>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -12,7 +7,6 @@ using TrustworthyCompanion.Database;
 using TrustworthyCompanion.Messages;
 using TrustworthyCompanion.Model;
 using TrustworthyCompanion.Tools;
-using Windows.UI.Xaml.Controls;
 
 namespace TrustworthyCompanion.ViewModel.Admin {
 	public class ALandingPageViewModel : ViewModelBase {

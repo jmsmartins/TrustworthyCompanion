@@ -9,5 +9,5 @@
 	
 	<tools:VisibilityValueConverter x:Key="VisibilityValueConverter" />
 	<tools:SelectionModeValueConverter x:Key="SelectionModeValueConverter" />
-    
+
 </ResourceDictionary>

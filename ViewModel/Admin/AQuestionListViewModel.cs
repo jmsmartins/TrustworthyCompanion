@@ -24,11 +24,13 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		public AQuestionListViewModel(INavigationService navigationService) {
 			this._navigationService = navigationService;
 			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
+			this.ControlUnloadedCommand = new RelayCommand(ControlUnloaded);
 			this.ListItemClick = new RelayCommand<QuestionModel>((item) => ListItemClickHandler(item));
 		}
 
 		#region RELAY COMMANDS
 		public RelayCommand ControlLoadedCommand { get; private set; }
+		public RelayCommand ControlUnloadedCommand { get; private set; }
 		public RelayCommand<QuestionModel> ListItemClick { get; private set; }
 		#endregion
 
@@ -76,8 +78,16 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 
 			this.MultipleSelect = false;
 			this.IsClickEnabled = true;
-
 			await LoadData();
+		}
+
+		/// <summary>
+		/// When the control unloads
+		/// </summary>
+		private void ControlUnloaded() {
+			// Unregister the messenger to avoid receiving more messages when it's not open
+			Messenger.Default.Unregister<SelectionModeChange>(this, (action) => OnSelectionModeChange(action));
+			Messenger.Default.Unregister<GeneralMessages>(this, (action) => OnMessageReceived(action));
 		}
 
 		private async Task LoadData() {

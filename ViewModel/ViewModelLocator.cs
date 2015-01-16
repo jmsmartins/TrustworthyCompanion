@@ -59,6 +59,7 @@ namespace TrustworthyCompanion.ViewModel {
 			SimpleIoc.Default.Register<USearchPageViewModel>();
 			SimpleIoc.Default.Register<ULandingPageViewModel>();
 			SimpleIoc.Default.Register<UQuestionPageViewModel>();
+			SimpleIoc.Default.Register<MapViewModel>();
 
 			// User User Controls
 			SimpleIoc.Default.Register<UQuestionViewModel>();
@@ -86,6 +87,7 @@ namespace TrustworthyCompanion.ViewModel {
 			navigationService.Configure("USearchPage", typeof(USearchPage));
 			navigationService.Configure("ULandingPage", typeof(ULandingPage));
 			navigationService.Configure("UQuestionPage", typeof(UQuestionPage));
+			navigationService.Configure("MapPage", typeof(MapPage));
 
 			// Media
 			navigationService.Configure("PhotoCapturePage", typeof(PhotoCapturePage));
@@ -104,7 +106,7 @@ namespace TrustworthyCompanion.ViewModel {
 		}
 
 		# region ADMIN PAGES
-		public ALandingPageViewModel APivotPageViewModel {
+		public ALandingPageViewModel ALandingPageViewModel {
 			get { return ServiceLocator.Current.GetInstance<ALandingPageViewModel>();	}
 		}
 
@@ -142,6 +144,10 @@ namespace TrustworthyCompanion.ViewModel {
 
 		public UQuestionPageViewModel UQuestionPageViewModel {
 			get { return ServiceLocator.Current.GetInstance<UQuestionPageViewModel>(); }
+		}
+
+		public MapViewModel MapViewModel {
+			get { return ServiceLocator.Current.GetInstance<MapViewModel>(); }
 		}
 		#endregion
 

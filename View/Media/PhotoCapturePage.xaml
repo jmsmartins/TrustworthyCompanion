@@ -27,13 +27,13 @@
 		</Grid.RowDefinitions>
 		<Image x:Name="CapturedPhoto" Grid.Row="0" Source="{Binding Path=Question.PhotoFile, Mode=TwoWay}" Tag="{Binding Path=PhotoFile, Mode=TwoWay}" Margin="12" />
 		<CaptureElement x:Name="CameraCapture" Grid.Row="0" Visibility="{Binding Path=CaptureEnabled, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" Margin="12"/>
-		<Button Grid.Row="1" Content="Capture Photo" Click="Button_Click" IsEnabled="{Binding Path=CaptureEnabled}" HorizontalAlignment="Center" Command="{Binding Path=CapturePhotoCommand}" />
+		<Button Grid.Row="1" Width="200" Height="100" FontSize="22" Content="Capture Photo" Click="Button_Click" IsEnabled="{Binding Path=CaptureEnabled}" HorizontalAlignment="Center" Command="{Binding Path=CapturePhotoCommand}" />
 	</Grid>
 
 	<Page.BottomAppBar>
 		<CommandBar>
 			<CommandBar.PrimaryCommands>
-				<AppBarButton Content="Delete" Command="{Binding DeleteCommand}" Icon="Delete" Label="Delete" />
+				<AppBarButton Content="Delete" Command="{Binding DeleteCommand}" IsEnabled="{Binding Path=DeleteEnabled}" Icon="Delete" Label="Delete" />
 			</CommandBar.PrimaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>

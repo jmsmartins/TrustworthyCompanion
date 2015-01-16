@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using TrustworthyCompanion.Model;
@@ -14,9 +15,12 @@ namespace TrustworthyCompanion.ViewModel.User.Question {
 			if(!SimpleIoc.Default.IsRegistered<QuestionModel>()) {
 				Messenger.Default.Register<QuestionModel>(this, (action) => SetupProperties(action));
 			}
+
+			this.ControlUnloadedCommand = new RelayCommand(ControlUnloaded);
 		}
 
 		#region RELAY COMMANDS
+		public RelayCommand ControlUnloadedCommand { get; private set; }
 		#endregion
 
 		#region PROPERTIES
@@ -32,6 +36,10 @@ namespace TrustworthyCompanion.ViewModel.User.Question {
 
 		private void SetupProperties(QuestionModel action) {
 			Question = action;
+		}
+
+		private void ControlUnloaded() {
+			Messenger.Default.Unregister<QuestionModel>(this, (action) => SetupProperties(action));
 		}
 	}
 }

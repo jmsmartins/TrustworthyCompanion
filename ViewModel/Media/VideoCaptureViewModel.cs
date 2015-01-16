@@ -8,6 +8,7 @@ using TrustworthyCompanion.Database;
 using TrustworthyCompanion.Model;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace TrustworthyCompanion.ViewModel.Media {
 	public class VideoCaptureViewModel : ViewModelBase {
@@ -27,8 +28,8 @@ namespace TrustworthyCompanion.ViewModel.Media {
 			this.PageLoadedCommand = new RelayCommand(PageLoaded);
 			this.PageUnloadedCommand = new RelayCommand(PageUnloaded);
 			this.CaptureVideoCommand = new RelayCommand<object>((sender) => CaptureVideoHandler(sender));
-			this.PlayCommand = new RelayCommand<object>((sender) => PlayVideoHandler(sender));
-			this.StopCommand = new RelayCommand<object>((sender) => StopVideoHandler(sender));
+			this.PlayStopCommand = new RelayCommand<object>((sender) => PlayStopVideoHandler(sender));
+			this.MediaEndedCommand = new RelayCommand<object>((item) => MediaEndedHandler(item));
 			this.DeleteCommand = new RelayCommand(DeleteVideoHandler);
 		}
 
@@ -36,9 +37,9 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		public RelayCommand PageLoadedCommand { get; private set; }
 		public RelayCommand PageUnloadedCommand { get; private set; }
 		public RelayCommand<object> CaptureVideoCommand { get; private set; }
-		public RelayCommand<object> PlayCommand { get; private set; }
-		public RelayCommand<object> StopCommand { get; private set; }
+		public RelayCommand<object> PlayStopCommand { get; private set; }
 		public RelayCommand DeleteCommand { get; private set; }
+		public RelayCommand<object> MediaEndedCommand { get; private set; }
 		#endregion
 
 		#region PROPERTIES
@@ -61,21 +62,21 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		}
 
 		/// <summary>
-		/// The play button enabled property
+		/// The play/stop button enabled property
 		/// </summary>
-		private bool _playEnabled;
-		public bool PlayEnabled {
-			get { return _playEnabled; }
-			set { Set(() => this.PlayEnabled, ref _playEnabled, value); }
+		private bool _playStopEnabled;
+		public bool PlayStopEnabled {
+			get { return _playStopEnabled; }
+			set { Set(() => this.PlayStopEnabled, ref _playStopEnabled, value); }
 		}
 
 		/// <summary>
-		/// The stop button enabled property
+		/// The Play button checked property
 		/// </summary>
-		private bool _stopEnabled;
-		public bool StopEnabled {
-			get { return _stopEnabled; }
-			set { Set(() => this.StopEnabled, ref _stopEnabled, value); }
+		private bool _playButtonChecked;
+		public bool PlayButtonChecked {
+			get { return _playButtonChecked; }
+			set { Set(() => this.PlayButtonChecked, ref _playButtonChecked, value); }
 		}
 
 		/// <summary>
@@ -110,9 +111,9 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		/// </summary>
 		private void PageLoaded() {
 			CaptureEnabled = (Question.VideoFile != "") ? false : true;
-			PlayEnabled = !CaptureEnabled;
-			StopEnabled = false;
+			PlayStopEnabled = !CaptureEnabled;
 			DeleteEnabled = !CaptureEnabled;
+			PlayButtonChecked = false;
 		}
 
 		/// <summary>
@@ -128,31 +129,31 @@ namespace TrustworthyCompanion.ViewModel.Media {
 			if(!_recording) {
 				_recording = true;
 				DeleteEnabled = false;
-				PlayEnabled = false;
-				StopEnabled = PlayEnabled;
+				PlayStopEnabled = false;
 			} else {
 				CaptureEnabled = false;
-				PlayEnabled = true;
-				StopEnabled = !PlayEnabled;
+				PlayStopEnabled = true;
 				DeleteEnabled = true;
 				_recording = false;
 			}
 		}
 
-		private void PlayVideoHandler(object sender) {
+		private void PlayStopVideoHandler(object sender) {
 			MediaElement player = (MediaElement)sender;
-			player.Play();
-			PlayEnabled = false;
-			DeleteEnabled = PlayEnabled;
-			StopEnabled = !PlayEnabled;
+			if(player.CurrentState == MediaElementState.Playing) {
+				MediaEndedHandler(player);
+			} else {
+				player.Play();
+				DeleteEnabled = PlayStopEnabled;
+			}
 		}
 
-		private void StopVideoHandler(object sender) {
-			MediaElement player = (MediaElement)sender;
-			player.Stop();
-			PlayEnabled = true;
-			DeleteEnabled = PlayEnabled;
-			StopEnabled = !PlayEnabled;
+		private void MediaEndedHandler(object sender) {
+			MediaElement element = (MediaElement)sender;
+			element.Stop();
+			PlayStopEnabled = true;
+			DeleteEnabled = PlayStopEnabled;
+			PlayButtonChecked = false;
 		}
 
 		private async void DeleteVideoHandler() {
@@ -166,8 +167,8 @@ namespace TrustworthyCompanion.ViewModel.Media {
 
 			// Reset the controls
 			CaptureEnabled = true;
-			PlayEnabled = !CaptureEnabled;
-			StopEnabled = PlayEnabled;
+			DeleteEnabled = !CaptureEnabled;
+			PlayStopEnabled = !CaptureEnabled;
 		}
 	}
 }

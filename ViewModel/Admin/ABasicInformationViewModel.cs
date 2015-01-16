@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
@@ -18,10 +14,12 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 		/// </summary>
 		public ABasicInformationViewModel() {
 			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
+			this.ControlUnloadedCommand = new RelayCommand(ControlUnloaded);
 		}
 
 		#region RELAY COMMANDS
 		public RelayCommand ControlLoadedCommand { get; private set; }
+		public RelayCommand ControlUnloadedCommand { get; private set; }
 		#endregion
 
 		#region PROPERTIES
@@ -45,6 +43,14 @@ namespace TrustworthyCompanion.ViewModel.Admin {
 			}
 
 			await LoadData();
+		}
+
+		/// <summary>
+		/// When the control unloads
+		/// </summary>
+		private void ControlUnloaded() {
+			// Unregister the messenger to avoid receiving more messages when it's not open
+			Messenger.Default.Unregister<GeneralMessages>(this, (action) => SaveHandler(action));
 		}
 
 		private async Task LoadData() {

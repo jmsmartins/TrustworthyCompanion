@@ -13,17 +13,18 @@ namespace TrustworthyCompanion.ViewModel.Admin.Question {
 		/// Initializes a new instance of the AQuestionViewModel class.
 		/// </summary>
 		public AQuestionViewModel() {
-			// Register the messenger
 			// Subscribe the messenger for messages sent to it
 			if(!SimpleIoc.Default.IsRegistered<QuestionModel>()) {
 				Messenger.Default.Register<QuestionModel>(this, (action) => SetupProperties(action));
 			}
 
 			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
+			this.ControlUnloadedCommand = new RelayCommand(ControlUnloaded);
 		}
 
 		#region RELAY COMMANDS
 		public RelayCommand ControlLoadedCommand { get; private set; }
+		public RelayCommand ControlUnloadedCommand { get; private set; }
 		#endregion
 
 		#region PROPERTIES
@@ -37,23 +38,24 @@ namespace TrustworthyCompanion.ViewModel.Admin.Question {
 		}
 		#endregion
 
-		private void ControlLoaded() {
-			// Register the messenger
-			// Subscribe the messenger for messages sent to it
-			if(!SimpleIoc.Default.IsRegistered<GeneralMessages>()) {
-				Messenger.Default.Register<GeneralMessages>(this, (action) => SaveQuestion(action));
-			}
-
-			//await LoadData();
-		}
-
-		private async Task LoadData() {
-			//BasicInformation = await DatabaseService.GetQuestion();
-		}
-
 		private void SetupProperties(QuestionModel action) {
 			Question = action;
 		}
+
+		/// <summary>
+		/// When the control loads, set properties
+		/// </summary>
+		private void ControlLoaded() {
+			//
+		}
+
+		/// <summary>
+		/// When the control unloads
+		/// </summary>
+		private void ControlUnloaded() {
+			// Unregister the messenger to avoid receiving more messages when it's not open
+			Messenger.Default.Unregister<QuestionModel>(this, (action) => SetupProperties(action));
+		}		
 
 		private async void SaveQuestion(GeneralMessages action) {
 			if(action == GeneralMessages.SAVE_QUESTION) {

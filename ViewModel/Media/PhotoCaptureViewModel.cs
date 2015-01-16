@@ -77,6 +77,15 @@ namespace TrustworthyCompanion.ViewModel.Media {
 				DatabaseService.UpdateQuestion(Question);
 			}
 		}
+
+		/// <summary>
+		/// The delete button enabled property
+		/// </summary>
+		private bool _deleteEnabled;
+		public bool DeleteEnabled {
+			get { return _deleteEnabled; }
+			set { Set(() => this.DeleteEnabled, ref _deleteEnabled, value); }
+		}
 		#endregion
 
 		private void SetupProperties(QuestionModel action) {
@@ -88,6 +97,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		/// </summary>
 		private void PageLoaded() {
 			CaptureEnabled = (Question.PhotoFile != "") ? false : true;
+			DeleteEnabled = !CaptureEnabled;
 		}
 
 		/// <summary>
@@ -108,6 +118,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 		private void CapturePhotoHandler(object sender) {
 			// Disable button to prevent exception due to parallel capture usage
 			CaptureEnabled = false;
+			DeleteEnabled = !CaptureEnabled;
 		}
 
 		private async void DeletePhotoHandler() {
@@ -121,6 +132,7 @@ namespace TrustworthyCompanion.ViewModel.Media {
 
 			// Reset the controls
 			CaptureEnabled = true;
+			DeleteEnabled = !CaptureEnabled;
 		}
 	}
 }

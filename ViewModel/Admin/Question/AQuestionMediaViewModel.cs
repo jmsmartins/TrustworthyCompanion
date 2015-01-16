@@ -19,26 +19,38 @@ namespace TrustworthyCompanion.ViewModel.Admin.Question {
 		public AQuestionMediaViewModel(INavigationService navigationService) {
 			this._navigationService = navigationService;
 
-			// Register the messenger
 			// Subscribe the messenger for messages sent to it
 			if(!SimpleIoc.Default.IsRegistered<QuestionModel>()) {
 				Messenger.Default.Register<QuestionModel>(this, (action) => SetupProperties(action));
 			}
 
 			this.ControlLoadedCommand = new RelayCommand(ControlLoaded);
+			this.ControlUnloadedCommand = new RelayCommand(ControlUnloaded);
 			this.MediaAddCommand = new RelayCommand<string>((item) => MediaAddHandler(item));
 		}
 
 		#region RELAY COMMANDS
 		public RelayCommand ControlLoadedCommand { get; private set; }
+		public RelayCommand ControlUnloadedCommand { get; private set; }
 		public RelayCommand<string> MediaAddCommand { get; private set; }
 		#endregion
 
 		#region PROPERTIES
 		#endregion
 
+		/// <summary>
+		/// When the control loads, set properties
+		/// </summary>
 		private void ControlLoaded() {
+			
+		}
 
+		/// <summary>
+		/// When the control unloads
+		/// </summary>
+		private void ControlUnloaded() {
+			// Unregister the messenger to avoid receiving more messages when it's not open
+			Messenger.Default.Unregister<QuestionModel>(this, (action) => SetupProperties(action));
 		}
 
 		private void SetupProperties(QuestionModel action) {

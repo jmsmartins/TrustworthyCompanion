@@ -25,17 +25,23 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<MediaElement x:Name="Audio" Source="{Binding Path=Question.AudioFile}" Visibility="Collapsed" AutoPlay="False" />
+		<MediaElement x:Name="Audio" Source="{Binding Path=Question.AudioFile}" Visibility="Collapsed" AutoPlay="False">
+			<i:Interaction.Behaviors>
+				<core:EventTriggerBehavior EventName="MediaEnded">
+					<core:InvokeCommandAction Command="{Binding MediaEndedCommand}" CommandParameter="{Binding ElementName=Audio}" />
+				</core:EventTriggerBehavior>
+			</i:Interaction.Behaviors>
+		</MediaElement>
 
-		<ToggleButton Grid.Row="0" Content="Record Audio" Command="{Binding Path=RecordAudioCommand}" CommandParameter="{Binding}" HorizontalAlignment="Center" IsEnabled="{Binding Path=RecordEnabled}"/>
-		<Button Grid.Row="1" Command="{Binding Path=PlayAudioCommand}" IsEnabled="{Binding Path=PlayEnabled}" CommandParameter="{Binding ElementName=Audio}" Content="Play" HorizontalAlignment="Center" />
+		<ToggleButton Grid.Row="0" Width="250" Height="125" FontSize="30" Content="Record Audio" Command="{Binding Path=RecordAudioCommand}" CommandParameter="{Binding}" HorizontalAlignment="Center" IsEnabled="{Binding Path=RecordEnabled}"/>
+		<ToggleButton Grid.Row="1" Width="200" Height="100" FontSize="26" Command="{Binding Path=PlayStopCommand}" IsEnabled="{Binding Path=PlayStopEnabled}" IsChecked="{Binding Path=PlayButtonChecked, Mode=TwoWay}" CommandParameter="{Binding ElementName=Audio}" Content="Play/Stop" HorizontalAlignment="Center" />
 	</Grid>
 
 
 	<Page.BottomAppBar>
 		<CommandBar>
 			<CommandBar.PrimaryCommands>
-				<AppBarButton Content="Delete" Command="{Binding DeleteAudioCommand}" Icon="Delete" Label="Delete" />
+				<AppBarButton Content="Delete" Command="{Binding DeleteCommand}" IsEnabled="{Binding Path=DeleteEnabled}" Icon="Delete" Label="Delete" />
 			</CommandBar.PrimaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>

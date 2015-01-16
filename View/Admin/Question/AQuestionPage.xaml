@@ -11,7 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<Grid>
-		<Pivot x:Uid="Pivot" Title="QUESTION NAME" x:Name="pivot" SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}" CommonNavigationTransitionInfo.IsStaggerElement="True">
+		<Pivot x:Uid="Pivot" Title="QUESTION" x:Name="pivot" SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}" CommonNavigationTransitionInfo.IsStaggerElement="True">
             <!--Pivot item one-->
 			<PivotItem
                 x:Uid="Question"

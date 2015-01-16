@@ -88,7 +88,12 @@ namespace TrustworthyCompanion.ViewModel.User {
 
 			_otherActions.Add(new GeneralQuestionModel() {
 				Id = "sms",
-				Terms = "sms send please"
+				Terms = "sms send please message"
+			});
+
+			_otherActions.Add(new GeneralQuestionModel() {
+				Id = "home",
+				Terms = "home way find"
 			});
 		}
 
@@ -148,6 +153,10 @@ namespace TrustworthyCompanion.ViewModel.User {
 					msg.Body = "Please call me as soon as possible.";
 					msg.Recipients.Add(_basicInformation.Phone);
 					await ChatMessageManager.ShowComposeSmsMessageAsync(msg);
+				break;
+
+				case "home":
+					NavigateTo(new Tuple<string, object>(PagesNames.MapPage, ""));
 				break;
 			}
 		}

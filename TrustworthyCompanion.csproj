@@ -90,6 +90,7 @@
     <Compile Include="Model\BasicInformationModel.cs" />
     <Compile Include="Model\GeneralQuestionModel.cs" />
     <Compile Include="Model\QuestionModel.cs" />
+    <Compile Include="Tools\MapView.cs" />
     <Compile Include="Tools\MediaCaptureTool.cs" />
     <Compile Include="Tools\ItemClickCommand.cs" />
     <Compile Include="Tools\ListViewHelper.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="ViewModel\Media\PhotoShowViewModel.cs" />
     <Compile Include="ViewModel\Media\VideoCaptureViewModel.cs" />
     <Compile Include="ViewModel\Media\VideoShowViewModel.cs" />
+    <Compile Include="ViewModel\User\MapViewModel.cs" />
     <Compile Include="ViewModel\User\Question\UQuestionMediaViewModel.cs" />
     <Compile Include="ViewModel\User\Question\UQuestionViewModel.cs" />
     <Compile Include="View\Media\AudioShowPage.xaml.cs">
@@ -118,6 +120,9 @@
     </Compile>
     <Compile Include="View\Media\VideoShowPage.xaml.cs">
       <DependentUpon>VideoShowPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\MapPage.xaml.cs">
+      <DependentUpon>MapPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\User\Question\UQuestionMediaView.xaml.cs">
       <DependentUpon>UQuestionMediaView.xaml</DependentUpon>
@@ -179,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\my-position.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
@@ -204,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Media\VideoShowPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\MapPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

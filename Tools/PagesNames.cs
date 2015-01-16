@@ -11,6 +11,7 @@
 		public static string USearchPage { get; private set; }
 		public static string ULandingPage { get; private set; }
 		public static string UQuestionPage { get; private set; }
+		public static string MapPage { get; private set; }
 
 		// Media Pages
 		public static string PhotoCapturePage { get; private set; }
@@ -31,6 +32,7 @@
 			USearchPage = "USearchPage";
 			ULandingPage = "ULandingPage";
 			UQuestionPage = "UQuestionPage";
+			MapPage = "MapPage";
 
 			// Media Pages
 			PhotoCapturePage = "PhotoCapturePage";

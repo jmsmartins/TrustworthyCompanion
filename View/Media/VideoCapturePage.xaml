@@ -26,14 +26,19 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<MediaElement Grid.Row="0" x:Name="CapturedVideo" Source="{Binding Path=Question.VideoFile}" Tag="{Binding Path=VideoFile, Mode=TwoWay}" Margin="12" AutoPlay="False" />
+		<MediaElement Grid.Row="0" x:Name="CapturedVideo" Source="{Binding Path=Question.VideoFile}" Tag="{Binding Path=VideoFile, Mode=TwoWay}" Margin="12" AutoPlay="False">
+			<i:Interaction.Behaviors>
+				<core:EventTriggerBehavior EventName="MediaEnded">
+					<core:InvokeCommandAction Command="{Binding MediaEndedCommand}" CommandParameter="{Binding ElementName=CapturedVideo}" />
+				</core:EventTriggerBehavior>
+			</i:Interaction.Behaviors>
+		</MediaElement>
 		<CaptureElement Grid.Row="0" x:Name="CameraCapture" Margin="12" Visibility="{Binding Path=CaptureEnabled, Mode=OneWay, Converter={StaticResource VisibilityValueConverter}}" />
 
-		<ToggleButton Grid.Row="1" Content="Record Video" x:Name="CaptureVideoButton" HorizontalAlignment="Center" Click="CaptureVideoButton_Click" IsEnabled="{Binding Path=CaptureEnabled}" Command="{Binding Path=CaptureVideoCommand}" />
+		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+			<ToggleButton Content="Record Video" Width="200" Height="75" FontSize="22" x:Name="CaptureVideoButton" HorizontalAlignment="Center" Click="CaptureVideoButton_Click" IsEnabled="{Binding Path=CaptureEnabled}" Command="{Binding Path=CaptureVideoCommand}" />
 
-		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-			<Button Content="Play" Command="{Binding PlayCommand}" HorizontalAlignment="Center" IsEnabled="{Binding Path=PlayEnabled}" CommandParameter="{Binding ElementName=CapturedVideo}" />
-			<Button Content="Stop" Command="{Binding StopCommand}" HorizontalAlignment="Center" IsEnabled="{Binding Path=StopEnabled}" CommandParameter="{Binding ElementName=CapturedVideo}" Margin="10,0,0,0" />
+			<ToggleButton Content="Play/Stop" IsEnabled="{Binding Path=PlayStopEnabled}" Command="{Binding PlayStopCommand}" IsChecked="{Binding Path=PlayButtonChecked, Mode=TwoWay}" HorizontalAlignment="Center" Margin="15,0,0,0" Width="150" Height="75" FontSize="22" CommandParameter="{Binding ElementName=CapturedVideo}" />
 		</StackPanel>
 		
 	</Grid>

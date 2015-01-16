@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Text;
 using System.Threading.Tasks;
+using TrustworthyCompanion.Database;
+using TrustworthyCompanion.Model;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Services.Maps;
 using Windows.Storage.Streams;
 using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -29,6 +28,8 @@ namespace TrustworthyCompanion.View.User {
 		private Geopoint _startPosition;
 		private Geopoint _endPosition;
 
+		private BasicInformationModel _basicInformation;
+
 		public MapPage() {
 			this.InitializeComponent();
 			this.NavigationCacheMode = NavigationCacheMode.Required;
@@ -42,10 +43,15 @@ namespace TrustworthyCompanion.View.User {
 		protected async override void OnNavigatedTo(NavigationEventArgs e) {
 			MyMap.MapServiceToken = "abcdef-abcdefghijklmno";
 
+			_basicInformation = await DatabaseService.GetBasicInformation();
+
 			_geolocator = new Geolocator();
 			_geolocator.DesiredAccuracyInMeters = 50;
 			try {
 				_geoPosition = await _geolocator.GetGeopositionAsync(maximumAge: TimeSpan.FromMinutes(5), timeout: TimeSpan.FromSeconds(10));
+
+				//MapLocationFinderResult result = await MapLocationFinder.FindLocationsAsync(_basicInformation.Address, new Geopoint(new BasicGeoposition()), 5);
+				//var point = result.Locations;
 
 				MapIcon mapIcon = new MapIcon();
 				mapIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/my-position.png"));

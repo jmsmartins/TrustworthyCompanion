@@ -213,17 +213,66 @@ namespace TrustworthyCompanion.Database {
 
 					await sqlConnection.InsertAsync(info);
 
-					// Questions
-					for(int i = 1; i <= 10; i++) {
-						QuestionsList questionsList = new QuestionsList() {
-							Title = "Question " + i.ToString(),
-							Message = "This is a message " + i.ToString(),
-							AudioFile = "", //ApplicationData.Current.LocalFolder.Path + "/audio.m4a",
-							VideoFile = "", //ApplicationData.Current.LocalFolder.Path + "/video.mp4",
-							PhotoFile = "" //ApplicationData.Current.LocalFolder.Path + "/photo.jpg"
-						};
+					List<QuestionsList> questions = new List<QuestionsList>();
+					questions.Add(new QuestionsList() {
+						Title = "Who am I?",
+						Message = "You are John Doe and live on 8th street, Boston.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "How old am I?",
+						Message = "You are 65 years old.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "What do I need to know about myself?",
+						Message = "You have a case of dementia and so you need constant help. For any type of assistence you can use this app to call home, send an email or sms for someone to call or find more information about yourself like you're doing right now.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "Where do I need to go?",
+						Message = "It's not possible to know where you want to go, but you can call someone or ask to be called. Please search for 'call home' or 'send message'.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "Where do I leave my medication?",
+						Message = "You usually have it in your jacket's left pocket. If it's not there it should be home, so you just need to ask the app to take you home.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "Where do I leave my keys?",
+						Message = "You usually leave them on the front entrance of the house, you can look to a picture of it on the next screens.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "When do I have my next doctor's appointment?",
+						Message = "Your next appointment is on August 3rd at 11AM.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
+					questions.Add(new QuestionsList() {
+						Title = "What's my doctor's name?",
+						Message = "Your doctor name is Chuck Norris. He takes very good care of you. A picture can be found on the next screen.",
+						AudioFile = "",
+						VideoFile = "",
+						PhotoFile = "" 
+					});
 
-						await sqlConnection.InsertAsync(questionsList);
+					foreach(var item in questions) {
+						await sqlConnection.InsertAsync(item);
 					}
 				}
 			} catch(SQLiteException e) {

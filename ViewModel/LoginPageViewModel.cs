@@ -21,10 +21,6 @@ namespace TrustworthyCompanion.ViewModel {
 	/// </para>
 	/// </summary>
 	public class LoginPageViewModel : ViewModelBase {
-
-		// Session
-		private bool _hasSession = false;
-
 		// Navigation service
 		private INavigationService _navigationService;
 
@@ -76,13 +72,6 @@ namespace TrustworthyCompanion.ViewModel {
 			this.Password = "admin";
 
 			await Setup();
-
-			// TODO Remove later on
-			if(_hasSession) {
-				LoginHandler();
-			} else {
-				LoginAsGuestHandler();
-			}
 		}
 
 		public async Task Setup() {
@@ -100,7 +89,6 @@ namespace TrustworthyCompanion.ViewModel {
 
 		private void LoginHandler() {
 			if(Username == "admin" && Password == "admin") {
-				_hasSession = true;
 				NavigateTo(new Tuple<string, string>(PagesNames.ALandingPage, ""));
 			} else {
 				return;
